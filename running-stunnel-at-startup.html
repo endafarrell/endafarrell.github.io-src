@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Running stunnel at startup</title>
+        <link rel="stylesheet" href="./theme/css/main.css" />
+        <link href="http://endafarrell.net/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="endafarrell.net Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="./">endafarrell.net </a></h1>
+                <nav><ul>
+                    <li><a href="./category/geo.html">Geo</a></li>
+                    <li><a href="./category/javascript.html">Javascript</a></li>
+                    <li class="active"><a href="./category/other-code.html">Other code</a></li>
+                    <li><a href="./category/python.html">Python</a></li>
+                    <li><a href="./category/quantified-self.html">Quantified self</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="./running-stunnel-at-startup.html" rel="bookmark"
+           title="Permalink to Running stunnel at startup">Running stunnel at startup</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-07-22T00:00:00+02:00">
+                Published: Wed 22 July 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="./author/enda-farrell.html">Enda Farrell</a>
+        </address>
+<p>In <a href="./category/other-code.html">Other code</a>.</p>
+<p>tags: <a href="./tag/mac.html">mac</a> <a href="./tag/ops.html">ops</a> <a href="./tag/unix.html">unix</a> <a href="./tag/work.html">work</a> </p>
+</footer><!-- /.post-info -->      <p>You might want your stunnels to be running all the time - and to start automatically when you log in. Here’s how:</p>
+<ul>
+<li>get your stunnel working. You’ll need to fix your certs, choose the correct ports, and all that yourself.</li>
+<li>
+<p>write a script (/Users/you/stunnel.sh) that’s just like this:</p>
+<h1>!/bin/sh</h1>
+<p>/opt/local/bin/stunnel /opt/local/etc/stunnel/stunnel.conf</p>
+</li>
+<li>
+<p>in a terminal window write this:</p>
+<p>sudo defaults write com.apple.loginwindow LoginHook /Users/you/stunnel.sh</p>
+</li>
+</ul>
+<p>Now you’re all set. Next time you login, the LoginHook will fire, running your “stunnel.sh” command which in turn calls 
+(with full paths) the stunnel config you’ve got set up.</p>
+<p><a href="http://support.apple.com/kb/HT2420">http://support.apple.com/kb/HT2420</a> has more info about creating LoginHooks</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://endafarrell.net/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

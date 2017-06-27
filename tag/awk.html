@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>endafarrell.net - awk</title>
+        <link rel="stylesheet" href="../theme/css/main.css" />
+        <link href="http://endafarrell.net/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="endafarrell.net Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="../">endafarrell.net </a></h1>
+                <nav><ul>
+                    <li><a href="../category/geo.html">Geo</a></li>
+                    <li><a href="../category/javascript.html">Javascript</a></li>
+                    <li><a href="../category/other-code.html">Other code</a></li>
+                    <li><a href="../category/python.html">Python</a></li>
+                    <li><a href="../category/quantified-self.html">Quantified self</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="../gawking-out.html">Gawking out</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2012-08-24T00:00:00+02:00">
+                Published: Fri 24 August 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/enda-farrell.html">Enda Farrell</a>
+        </address>
+<p>In <a href="../category/other-code.html">Other code</a>.</p>
+<p>tags: <a href="../tag/work.html">work</a> <a href="../tag/awk.html">awk</a> <a href="../tag/unix.html">unix</a> <a href="../tag/ops.html">ops</a> <a href="../tag/gawk.html">gawk</a> </p>
+</footer><!-- /.post-info --><p><img alt="awk logo" src="../images/gawking-out.jpg" style="float: left; margin-right: 7px;"> I've been 
+processing log files recently to see how a live system is 
+being used. When you have millions of hits daily, you need these processors to be fast.</p>
+<p>Today the best way is to have your log files shipped over onto a Hadoop cluster and map-reduce them: but sometimes 
+there's still a call for quick scripts. Here awk is a king :-)</p>
+<h2>Converting to a HTML table</h2>
+<p>I couldn't find a decent online version of converting a CSV into a HTML table - but with awk it's easy. Here's the 
+awk script:</p>
+<div class="highlight"><pre><span></span><span class="nb">BEGIN</span> <span class="p">{</span>
+    <span class="kr">print</span> <span class="s2">&quot;&lt;table&gt;&quot;</span> <span class="nx">HDR</span><span class="p">;</span>
+<span class="p">}</span> <span class="p">{</span> 
+    <span class="kr">printf</span> <span class="s2">&quot;&lt;tr&gt;&quot;</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nb">NF</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">printf</span> <span class="s2">&quot;&lt;td&gt;%s&lt;/td&gt;&quot;</span><span class="p">,</span> <span class="o">$</span><span class="nx">i</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kr">print</span> <span class="s2">&quot;&lt;/tr&gt;&quot;</span><span class="p">;</span>
+<span class="p">}</span> <span class="nb">END</span> <span class="p">{</span>
+    <span class="kr">print</span> <span class="s2">&quot;&lt;/table&gt;&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>This makes use of the field separator handling of awk: so a CSV can be converted into a simple HTML table like this:</p>
+<div class="highlight"><pre><span></span>cat stats.csv <span class="p">|</span><span class="se">\</span>
+awk -F<span class="s1">&#39;,&#39;</span> -f 2Table.awk <span class="se">\</span>
+--assign <span class="nv">HDR</span><span class="o">=</span><span class="s2">&quot;&lt;tr&gt;&lt;th&gt;A&gt;/th&gt;...&lt;/tr&gt;&quot;</span> &gt; stats.html
+</pre></div>
+
+
+<h2>Summing distinct rows</h2>
+<p>So the best way to describe this is to show an example:</p>
+<div class="highlight"><pre><span></span><span class="err">IP1 GET url1 200 32</span>
+<span class="err">IP2 GET url1 200 29</span>
+<span class="err">IP1 GET url1 200 21</span>
+</pre></div>
+
+
+<p>The "distinct rows" here would be "IP1 GET url1 200" and "IP2 GET url1 200". You could think of these as just a few 
+entries of the access_logs. Anyway, I wanted to sum together the times that these calls were taking (the last column). 
+Sometimes the number of fields varied so a general solution was needed.</p>
+<p>The desired output is:</p>
+<div class="highlight"><pre><span></span><span class="err">IP1 GET url1 200 53</span>
+<span class="err">IP2 GET url1 200 29</span>
+</pre></div>
+
+
+<p>and the script to do this is:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="c1"># Grab the value</span>
+    <span class="nx">num</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">+</span> <span class="o">$</span><span class="nb">NF</span><span class="p">;</span> 
+    <span class="c1"># Strip the value - $0 no longer has the value</span>
+    <span class="nb">NF</span><span class="o">--</span><span class="p">;</span>
+    <span class="c1"># Increments the value at hash[$0] or creates it</span>
+    <span class="c1"># if not already present.</span>
+    <span class="nx">hash</span><span class="p">[</span><span class="o">$</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nx">hash</span><span class="p">[</span><span class="o">$</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nx">num</span>
+<span class="p">}</span>
+<span class="nb">END</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="nx">ndx</span> <span class="o">in</span> <span class="nx">hash</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">print</span> <span class="nx">ndx</span><span class="p">,</span><span class="nx">hash</span><span class="p">[</span><span class="nx">ndx</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://endafarrell.net/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

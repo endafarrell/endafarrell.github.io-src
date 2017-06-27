@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>endafarrell.net - proxy</title>
+        <link rel="stylesheet" href="../theme/css/main.css" />
+        <link href="http://endafarrell.net/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="endafarrell.net Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="../">endafarrell.net </a></h1>
+                <nav><ul>
+                    <li><a href="../category/geo.html">Geo</a></li>
+                    <li><a href="../category/javascript.html">Javascript</a></li>
+                    <li><a href="../category/other-code.html">Other code</a></li>
+                    <li><a href="../category/python.html">Python</a></li>
+                    <li><a href="../category/quantified-self.html">Quantified self</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="../piping-content-through-ssh.html">Piping content through SSH</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2011-12-08T00:00:00+01:00">
+                Published: Thu 08 December 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/enda-farrell.html">Enda Farrell</a>
+        </address>
+<p>In <a href="../category/other-code.html">Other code</a>.</p>
+<p>tags: <a href="../tag/proxy.html">proxy</a> <a href="../tag/ssh.html">ssh</a> <a href="../tag/unix.html">unix</a> <a href="../tag/utilities.html">utilities</a> </p>
+</footer><!-- /.post-info --><p>Thanks to <a href="">http://www.contentwithstyle.co.uk/content/4-ssh-config-tips-for-faster-remote-working/</a> I can avoid 
+creating files which need to be scp’d: I can pipe the content directly:</p>
+<div class="highlight"><pre><span></span>local$ cat localfile.txt <span class="p">|</span> ssh remote <span class="s2">&quot;cat - &gt;&gt; remotefile.txt&quot;</span>
+</pre></div>
+
+
+<p>For this to work, I have already got “remote” set up in my <code>~/.ssh/config</code>. You can get much more involved in this: 
+see</p>
+<ul>
+<li><a href="">http://backdrift.org/transparent-proxy-with-ssh</a></li>
+<li><a href="">http://www.cyberciti.biz/faq/howto-use-tar-command-through-network-over-ssh-session/</a></li>
+<li><a href="">http://scratching.psybermonkey.net/2011/02/ssh-how-to-pipe-output-from-local-to.html</a></li>
+</ul>
+<p>My favourite example from the last site (execute commands on remote server but save the output to local) is:</p>
+<div class="highlight"><pre><span></span>ssh user@example.com <span class="s2">&quot;mysqldump -u DB_username -pDB_password DB_name | gzip -c&quot;</span> &gt; /local/dir/DB_backup.gz
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://endafarrell.net/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

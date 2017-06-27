@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>CouchDB 0.9x - 1st read from v large views serially</title>
+        <link rel="stylesheet" href="./theme/css/main.css" />
+        <link href="http://endafarrell.net/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="endafarrell.net Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="./">endafarrell.net </a></h1>
+                <nav><ul>
+                    <li><a href="./category/geo.html">Geo</a></li>
+                    <li><a href="./category/javascript.html">Javascript</a></li>
+                    <li class="active"><a href="./category/other-code.html">Other code</a></li>
+                    <li><a href="./category/python.html">Python</a></li>
+                    <li><a href="./category/quantified-self.html">Quantified self</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="./couchdb-09x-1st-read-from-v-large-views-serially.html" rel="bookmark"
+           title="Permalink to CouchDB 0.9x - 1st read from v large views serially">CouchDB 0.9x - 1st read from v large views serially</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-11-05T20:20:00+01:00">
+                Published: Thu 05 November 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="./author/enda-farrell.html">Enda Farrell</a>
+        </address>
+<p>In <a href="./category/other-code.html">Other code</a>.</p>
+<p>tags: <a href="./tag/bbc-forge.html">bbc-forge</a> <a href="./tag/couchdb.html">CouchDB</a> <a href="./tag/work.html">work</a> <a href="./tag/nosql.html">NoSQL</a> <a href="./tag/how-to.html">how-to</a> </p>
+</footer><!-- /.post-info -->      <p>On a server, we run 4 different CouchDB nodes, each with 30 or so databases. We can therefore have over 100 databases - 
+and if you’re reading from large views - or view over large databases - you will need to do so serially.</p>
+<p>We have 4 as “normally” CouchDB is kind re it’s use of memory, and kind in terms of CPU usage (we have 8-core machines 
+here). Yes - there is a headache re being disk-IO bound, but it’s not normally a problem.</p>
+<p>But views are now needed (to identify conflicting docs) as we have many applications using our KV service in both of 
+our datacentres. And adding them is not straight-forward.</p>
+<p>In the docs, you’ll see that a view is no more than a “special” document, so “creating” them is indeed 
+straight-forward. What’s not in the docs (yet at least) is that if you’re going to add a view to a large database, 
+you’re going to need to have PLENTY of memory. Last night we ran into “eheap_alloc” which took down each of the nodes.</p>
+<p>So - you gotta take your time, and do them serially.</p>
+<p>Unfortunately, the first read of a view over a very large database can take some time. Even a 70 thousand doc 8 GB 
+database can take 2 to 4 hours to build even a simple view (which led to the code that added and read them in 
+parallel) - go give yourself many days.</p>
+<p>Here’s what top looks like mid-1st read:</p>
+<div class="highlight"><pre><span></span>top - <span class="m">15</span>:05:54 up <span class="m">71</span> days, <span class="m">17</span>:26, <span class="m">1</span> user, load average: <span class="m">1</span>.02, <span class="m">1</span>.04, <span class="m">1</span>.04
+Tasks: <span class="m">147</span> total, <span class="m">1</span> running, <span class="m">146</span> sleeping, <span class="m">0</span> stopped, <span class="m">0</span> zombie
+Cpu<span class="o">(</span>s<span class="o">)</span>: <span class="m">11</span>.5%us, <span class="m">1</span>.7%sy, <span class="m">0</span>.0%ni, <span class="m">86</span>.9%id, <span class="m">0</span>.0%wa, <span class="m">0</span>.0%hi, <span class="m">0</span>.0%si, <span class="m">0</span>.0%st
+Mem:  16438912k total, 16331660k used,   107252k free,    19048k buffers
+Swap: 16771820k total,  8493532k used,  8278288k free,  6754524k cached
+
+  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
+ <span class="m">8893</span> couchdb   <span class="m">18</span>   <span class="m">0</span> <span class="m">15</span>.6g <span class="m">7</span>.8g <span class="m">1944</span> S    <span class="m">0</span> <span class="m">49</span>.6  <span class="m">13</span>:53.09 couchjs
+ <span class="m">2790</span> couchdb   <span class="m">25</span>   <span class="m">0</span>  357m 132m <span class="m">4180</span> S    <span class="m">0</span>  <span class="m">0</span>.8  <span class="m">76</span>:06.97 beam.smp
+ <span class="m">2843</span> couchdb   <span class="m">25</span>   <span class="m">0</span>  342m 167m <span class="m">4116</span> S   <span class="m">86</span>  <span class="m">1</span>.0  <span class="m">81</span>:54.23 beam.smp
+ <span class="m">2896</span> couchdb   <span class="m">25</span>   <span class="m">0</span>  175m  17m <span class="m">3896</span> S    <span class="m">0</span>  <span class="m">0</span>.1   <span class="m">0</span>:06.73 beam.smp
+ <span class="m">2949</span> couchdb   <span class="m">25</span>   <span class="m">0</span>  171m  14m <span class="m">3744</span> S    <span class="m">0</span>  <span class="m">0</span>.1   <span class="m">0</span>:06.03 beam.smp
+<span class="m">32320</span> couchdb   <span class="m">18</span>   <span class="m">0</span>  150m 105m <span class="m">1948</span> S   <span class="m">15</span>  <span class="m">0</span>.7  <span class="m">13</span>:36.61 couchjs
+</pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://endafarrell.net/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

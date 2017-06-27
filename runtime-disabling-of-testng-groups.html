@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Runtime disabling of TestNG groups</title>
+        <link rel="stylesheet" href="./theme/css/main.css" />
+        <link href="http://endafarrell.net/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="endafarrell.net Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="./">endafarrell.net </a></h1>
+                <nav><ul>
+                    <li><a href="./category/geo.html">Geo</a></li>
+                    <li><a href="./category/javascript.html">Javascript</a></li>
+                    <li class="active"><a href="./category/other-code.html">Other code</a></li>
+                    <li><a href="./category/python.html">Python</a></li>
+                    <li><a href="./category/quantified-self.html">Quantified self</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="./runtime-disabling-of-testng-groups.html" rel="bookmark"
+           title="Permalink to Runtime disabling of TestNG groups">Runtime disabling of TestNG groups</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-06-03T00:00:00+02:00">
+                Published: Thu 03 June 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="./author/enda-farrell.html">Enda Farrell</a>
+        </address>
+<p>In <a href="./category/other-code.html">Other code</a>.</p>
+<p>tags: <a href="./tag/code.html">code</a> <a href="./tag/java.html">java</a> <a href="./tag/testng.html">testng</a> </p>
+</footer><!-- /.post-info -->      <p>We have recently started to use TestNG and I like it. One thing that is needed is runtime control over whether or not to 
+run a group of tests.</p>
+<p>We have both unit tests and integration tests to assure ourselves of the system’s health. Running the integration tests 
+requires running databases (CouchDB in this case) but we don’t - by policy - have databases running on the continuous 
+integration Hudson server. There are of course other approaches to dealing with this, but we have found this works well 
+for us.</p>
+<p>Oh - and we need to have just one POM. So no</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;disabledGroups&gt;</span>system<span class="nt">&lt;/disabledGroups&gt;</span>
+</pre></div>
+
+
+<p>for us.
+We only want the “integration” group of tests to run when the local environment variable “SERVER_ENV” has the value of 
+dev. The following code causes these to be skipped (at least as of 5.12.1):</p>
+<div class="highlight"><pre><span></span>@BeforeGroups(groups = {&quot;integration&quot;})
+public void checkEnvIsDev() throws Exception {
+    boolean isDev = (&quot;dev&quot;.equals(System.getenv(&quot;SERVER_ENV&quot;)));
+    if (!isDev) throw new SkipException(&quot;Skip the \&quot;integration\&quot; group as $SERVER_ENV is not \&quot;dev\&quot;.&quot;);
+}
+</pre></div>
+
+
+<p>This may be a new feature, but it seems that as the SkipException is thrown, the entire group is skipped.</p>
+<p>Nice.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://endafarrell.net/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
