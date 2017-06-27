@@ -1,0 +1,4 @@
+[submodule "output"]
+	path = output
+	url = git@github.com:endafarrell/endafarrell.github.io.git
+	ignore = all
