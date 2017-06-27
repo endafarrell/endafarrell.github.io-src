@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>endafarrell.net - NoSQL</title>
+        <link rel="stylesheet" href="../theme/css/main.css" />
+        <link href="http://endafarrell.net/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="endafarrell.net Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="../">endafarrell.net </a></h1>
+                <nav><ul>
+                    <li><a href="../category/geo.html">Geo</a></li>
+                    <li><a href="../category/javascript.html">Javascript</a></li>
+                    <li><a href="../category/other-code.html">Other code</a></li>
+                    <li><a href="../category/python.html">Python</a></li>
+                    <li><a href="../category/quantified-self.html">Quantified self</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="../couchdb-compaction-big-impacts.html">CouchDB compaction - big impacts</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2009-12-08T20:20:00+01:00">
+                Published: Tue 08 December 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/enda-farrell.html">Enda Farrell</a>
+        </address>
+<p>In <a href="../category/other-code.html">Other code</a>.</p>
+<p>tags: <a href="../tag/bbc-forge.html">bbc-forge</a> <a href="../tag/compaction.html">compaction</a> <a href="../tag/couchdb.html">CouchDB</a> <a href="../tag/ops.html">ops</a> <a href="../tag/work.html">work</a> <a href="../tag/nosql.html">NoSQL</a> </p>
+</footer><!-- /.post-info --><p>CouchDB needs to have it’s databases compacted regularly. It’s quite easy to do but the ease of doing so may lead you 
+into thinking that it’s not worthy of serious consideration. You need to be aware of a few things.</p>
+<p>Here at the beeb we have many databases of very differing sizes, with very different “busy times” and to be honest we 
+don’t really know nor care what data is in them. Some documents are very simple, some we know are serialised PHP 
+objects, some are JSON base64 encodings of images (we do not allow attachments) - some docs are less than 50 bytes, 
+some are pushing 1 meg. Some databases have their busy times at 2am - others with the broadcast on the weekends of 
+television shows.</p>
+<p>We had a bug in some code a while ago (not CouchDB code) that meant we wanted to not compact our databases for a while. 
+Ordinarily we compact daily - but for one namespace (renamed as “brain test” below) we wanted to keep all previous 
+versions of data for a while (and still do so I did not compact it yesterday). As it was a “hmm - we need to do a 
+one-off here” I compacted everything (nearly together) instead of our system code’s more gentle “one at a time” 
+approach.</p>
+<p>Here are some charts so see what happened.</p>
+<p>This chart is going to take some explaining:
+<img alt="complex chart of sizes and compaction ratios" src="../images/2009/CouchDB-compaction.1.png"></p>
+<p>Think of it like a stock chart: the blue is the “volume” - the overall size on disk of the database. Its axis is on the 
+left drawn on a log scale given the range of sizes. The biggest was ~ 150 GB, the smallest 80k - but it’s not really 
+that important here.</p>
+<p>The top of the red bar is the relative size of the database before the compaction started - that’s why they are all
+ “one” on the right-hand axis. The bottom of the red bar is the relative size of the database after the compaction 
+ finished. Some of the databases did not compact much, some compacted down to about 2% of their original size. </p>
+<p>The thin black lines going up are the amount of space that the compaction took during the process. For namespaces that 
+compact really well, that line is short and the “high tide mark” of the amount of space used is not much above the 
+opening size. However - for namespaces that do not compact well - this high tide mark is as big as the original 
+database. More on this watch-point later. </p>
+<p>So - what can we see here? </p>
+<ul>
+<li>The biggest - “big page” - saved 32% of its space - it ended up at about 100 GB in the end.</li>
+<li>“a cache” which was the second biggest compacted REALLY well - due essentially to the very high number of revisions 
+  that some of its keys had. It started at 129 gig - finished at 7 gig. That was really quite a nice saving.</li>
+<li>I didn’t compact “brain test” so it finished up the same size - but look at it’s “high” bar. If I had compacted 
+  it - it would have take up quite a bit of space. The high bar ought not be there as it didn’t undergo the 
+  taking-up-more-space-temporarily compaction process - it’s a flaw in my spreadsheet.</li>
+</ul>
+<p>As you look at the red bars, you can see that most databases compact well - but small ones look like they don’t. This 
+is because small ones are not being revised much - there’s very little going on in them so there’s little changing and 
+hence little for the compactor to free up.</p>
+<p>So that’s the good news. Now the bad.</p>
+<p>Here’s what the process did to one of our 16 servers handling the CouchDB data:</p>
+<p><img alt="cluster load" src="../images/2009/CouchDB-compaction.2.png">
+<img alt="cluster cpu" src="../images/2009/CouchDB-compaction.3.png">
+<img alt="cluster io" src="../images/2009/CouchDB-compaction.4.png"></p>
+<p>For two hours on these 8 core (2 x quad-core DL-380s) machines were taking a thumping. The ops crew came wandering over 
+wondering what’s going on. They know that big HTTP traffic can cause load on these boxes but high load without traffic? 
+That’s odd.</p>
+<p>I don’t have the charts that show the slower response times that this causes on the users of the service but they’ll 
+look a bit like the load graph.</p>
+<p>What can we take from this?</p>
+<ul>
+<li>Compact regularly - but only if the amount of free space on your drives is greater than the size of your biggest 
+  database. This is a hard limit that your “capacity planning” must take into account</li>
+<li>It can save you a lot of space</li>
+<li>It will heavily load your servers - perhaps for quite a while</li>
+<li>Tell your ops crew that this will happen and that they can expect this sort of load</li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="../couchdb-09x-1st-read-from-v-large-views-serially.html" rel="bookmark"
+                           title="Permalink to CouchDB 0.9x - 1st read from v large views serially">CouchDB 0.9x - 1st read from v large views serially</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-11-05T20:20:00+01:00">
+                Published: Thu 05 November 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/enda-farrell.html">Enda Farrell</a>
+        </address>
+<p>In <a href="../category/other-code.html">Other code</a>.</p>
+<p>tags: <a href="../tag/bbc-forge.html">bbc-forge</a> <a href="../tag/couchdb.html">CouchDB</a> <a href="../tag/work.html">work</a> <a href="../tag/nosql.html">NoSQL</a> <a href="../tag/how-to.html">how-to</a> </p>
+</footer><!-- /.post-info -->                <p>On a server, we run 4 different CouchDB nodes, each with 30 or so databases. We can therefore have over 100 databases - 
+and if you’re reading from large views - or view over large databases - you will need to do so serially.</p>
+<p>We have 4 as “normally” CouchDB is kind …</p>
+                <a class="readmore" href="../couchdb-09x-1st-read-from-v-large-views-serially.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://endafarrell.net/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

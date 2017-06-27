@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>endafarrell.net - unix</title>
+        <link rel="stylesheet" href="../theme/css/main.css" />
+        <link href="http://endafarrell.net/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="endafarrell.net Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="../">endafarrell.net </a></h1>
+                <nav><ul>
+                    <li><a href="../category/geo.html">Geo</a></li>
+                    <li><a href="../category/javascript.html">Javascript</a></li>
+                    <li><a href="../category/other-code.html">Other code</a></li>
+                    <li><a href="../category/python.html">Python</a></li>
+                    <li><a href="../category/quantified-self.html">Quantified self</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="../gawking-out.html">Gawking out</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2012-08-24T00:00:00+02:00">
+                Published: Fri 24 August 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/enda-farrell.html">Enda Farrell</a>
+        </address>
+<p>In <a href="../category/other-code.html">Other code</a>.</p>
+<p>tags: <a href="../tag/work.html">work</a> <a href="../tag/awk.html">awk</a> <a href="../tag/unix.html">unix</a> <a href="../tag/ops.html">ops</a> <a href="../tag/gawk.html">gawk</a> </p>
+</footer><!-- /.post-info --><p><img alt="awk logo" src="../images/gawking-out.jpg" style="float: left; margin-right: 7px;"> I've been 
+processing log files recently to see how a live system is 
+being used. When you have millions of hits daily, you need these processors to be fast.</p>
+<p>Today the best way is to have your log files shipped over onto a Hadoop cluster and map-reduce them: but sometimes 
+there's still a call for quick scripts. Here awk is a king :-)</p>
+<h2>Converting to a HTML table</h2>
+<p>I couldn't find a decent online version of converting a CSV into a HTML table - but with awk it's easy. Here's the 
+awk script:</p>
+<div class="highlight"><pre><span></span><span class="nb">BEGIN</span> <span class="p">{</span>
+    <span class="kr">print</span> <span class="s2">&quot;&lt;table&gt;&quot;</span> <span class="nx">HDR</span><span class="p">;</span>
+<span class="p">}</span> <span class="p">{</span> 
+    <span class="kr">printf</span> <span class="s2">&quot;&lt;tr&gt;&quot;</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nb">NF</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">printf</span> <span class="s2">&quot;&lt;td&gt;%s&lt;/td&gt;&quot;</span><span class="p">,</span> <span class="o">$</span><span class="nx">i</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kr">print</span> <span class="s2">&quot;&lt;/tr&gt;&quot;</span><span class="p">;</span>
+<span class="p">}</span> <span class="nb">END</span> <span class="p">{</span>
+    <span class="kr">print</span> <span class="s2">&quot;&lt;/table&gt;&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>This makes use of the field separator handling of awk: so a CSV can be converted into a simple HTML table like this:</p>
+<div class="highlight"><pre><span></span>cat stats.csv <span class="p">|</span><span class="se">\</span>
+awk -F<span class="s1">&#39;,&#39;</span> -f 2Table.awk <span class="se">\</span>
+--assign <span class="nv">HDR</span><span class="o">=</span><span class="s2">&quot;&lt;tr&gt;&lt;th&gt;A&gt;/th&gt;...&lt;/tr&gt;&quot;</span> &gt; stats.html
+</pre></div>
+
+
+<h2>Summing distinct rows</h2>
+<p>So the best way to describe this is to show an example:</p>
+<div class="highlight"><pre><span></span><span class="err">IP1 GET url1 200 32</span>
+<span class="err">IP2 GET url1 200 29</span>
+<span class="err">IP1 GET url1 200 21</span>
+</pre></div>
+
+
+<p>The "distinct rows" here would be "IP1 GET url1 200" and "IP2 GET url1 200". You could think of these as just a few 
+entries of the access_logs. Anyway, I wanted to sum together the times that these calls were taking (the last column). 
+Sometimes the number of fields varied so a general solution was needed.</p>
+<p>The desired output is:</p>
+<div class="highlight"><pre><span></span><span class="err">IP1 GET url1 200 53</span>
+<span class="err">IP2 GET url1 200 29</span>
+</pre></div>
+
+
+<p>and the script to do this is:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="c1"># Grab the value</span>
+    <span class="nx">num</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">+</span> <span class="o">$</span><span class="nb">NF</span><span class="p">;</span> 
+    <span class="c1"># Strip the value - $0 no longer has the value</span>
+    <span class="nb">NF</span><span class="o">--</span><span class="p">;</span>
+    <span class="c1"># Increments the value at hash[$0] or creates it</span>
+    <span class="c1"># if not already present.</span>
+    <span class="nx">hash</span><span class="p">[</span><span class="o">$</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nx">hash</span><span class="p">[</span><span class="o">$</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nx">num</span>
+<span class="p">}</span>
+<span class="nb">END</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="nx">ndx</span> <span class="o">in</span> <span class="nx">hash</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kr">print</span> <span class="nx">ndx</span><span class="p">,</span><span class="nx">hash</span><span class="p">[</span><span class="nx">ndx</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="../grep-o-really-quite-useful.html" rel="bookmark"
+                           title="Permalink to "grep -o" - really quite useful">"grep -o" - really quite useful</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-12-30T00:00:00+01:00">
+                Published: Fri 30 December 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/enda-farrell.html">Enda Farrell</a>
+        </address>
+<p>In <a href="../category/other-code.html">Other code</a>.</p>
+<p>tags: <a href="../tag/grep.html">grep</a> <a href="../tag/unix.html">unix</a> <a href="../tag/utilities.html">utilities</a> </p>
+</footer><!-- /.post-info -->                <p>One really quite useful command is “grep -o” - it allows you to fire off something like this:</p>
+<div class="highlight"><pre><span></span>grep -o <span class="s2">&quot;Location supplier=\&quot;\w*\&quot;&quot;</span> locations.xml
+</pre></div>
+
+
+<p>And the output will be the phrases matching the regular expressions that start with “Location supplier=” with a double 
+quoted word (\w) in the locations.xml …</p>
+                <a class="readmore" href="../grep-o-really-quite-useful.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="../piping-content-through-ssh.html" rel="bookmark"
+                           title="Permalink to Piping content through SSH">Piping content through SSH</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-12-08T00:00:00+01:00">
+                Published: Thu 08 December 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/enda-farrell.html">Enda Farrell</a>
+        </address>
+<p>In <a href="../category/other-code.html">Other code</a>.</p>
+<p>tags: <a href="../tag/proxy.html">proxy</a> <a href="../tag/ssh.html">ssh</a> <a href="../tag/unix.html">unix</a> <a href="../tag/utilities.html">utilities</a> </p>
+</footer><!-- /.post-info -->                <p>Thanks to <a href="">http://www.contentwithstyle.co.uk/content/4-ssh-config-tips-for-faster-remote-working/</a> I can avoid 
+creating files which need to be scp’d: I can pipe the content directly:</p>
+<div class="highlight"><pre><span></span>local$ cat localfile.txt <span class="p">|</span> ssh remote <span class="s2">&quot;cat - &gt;&gt; remotefile.txt&quot;</span>
+</pre></div>
+
+
+<p>For this to work, I have already got “remote” set up in my <code>~/.ssh/config …</code></p>
+                <a class="readmore" href="../piping-content-through-ssh.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="../colloquy-demystifying-jira-references.html" rel="bookmark"
+                           title="Permalink to Colloquy demystifying JIRA references">Colloquy demystifying JIRA references</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-08-03T20:20:00+02:00">
+                Published: Mon 03 August 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/enda-farrell.html">Enda Farrell</a>
+        </address>
+<p>In <a href="../category/other-code.html">Other code</a>.</p>
+<p>tags: <a href="../tag/perl.html">Perl</a> <a href="../tag/bbc-forge.html">bbc-forge</a> <a href="../tag/mac.html">mac</a> <a href="../tag/unix.html">unix</a> <a href="../tag/work.html">work</a> <a href="../tag/applescript.html">applescript</a> <a href="../tag/jira.html">jira</a> <a href="../tag/colloquy.html">Colloquy</a> </p>
+</footer><!-- /.post-info -->                <p>The BBC’s Forge engineering team uses an IRC channel to hold meetings. It allows our team to not bother about exactly 
+where everyone is - some folks work from home, people are (mostly) in the office, but can be in different parts of 
+our buildings for all sorts of good …</p>
+                <a class="readmore" href="../colloquy-demystifying-jira-references.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="../running-stunnel-at-startup.html" rel="bookmark"
+                           title="Permalink to Running stunnel at startup">Running stunnel at startup</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-07-22T00:00:00+02:00">
+                Published: Wed 22 July 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/enda-farrell.html">Enda Farrell</a>
+        </address>
+<p>In <a href="../category/other-code.html">Other code</a>.</p>
+<p>tags: <a href="../tag/mac.html">mac</a> <a href="../tag/ops.html">ops</a> <a href="../tag/unix.html">unix</a> <a href="../tag/work.html">work</a> </p>
+</footer><!-- /.post-info -->                <p>You might want your stunnels to be running all the time - and to start automatically when you log in. Here’s how:</p>
+<ul>
+<li>get your stunnel working. You’ll need to fix your certs, choose the correct ports, and all that yourself.</li>
+<li>
+<p>write a script (/Users/you/stunnel.sh) that’s …</p></li></ul>
+                <a class="readmore" href="../running-stunnel-at-startup.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://endafarrell.net/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>endafarrell.net - Javascript</title><link href="http://endafarrell.net/" rel="alternate"></link><link href="http://endafarrell.net/feeds/javascript.atom.xml" rel="self"></link><id>http://endafarrell.net/</id><updated>2016-06-26T12:00:00+02:00</updated><entry><title>A Simple Chrome extension</title><link href="http://endafarrell.net/a-simple-chrome-extension.html" rel="alternate"></link><published>2016-06-09T21:40:00+02:00</published><updated>2016-06-09T21:40:00+02:00</updated><author><name>Enda Farrell</name></author><id>tag:endafarrell.net,2016-06-09:/a-simple-chrome-extension.html</id><summary type="html">&lt;p&gt;I had an itch to be able to easily find the Facebook ID for Place pages that I was visiting. You can - usually - find 
+the ID that the Facebook Graph API uses for a Place page by looking into the HTML source of the Facebook Place page and 
+recognising some …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I had an itch to be able to easily find the Facebook ID for Place pages that I was visiting. You can - usually - find 
+the ID that the Facebook Graph API uses for a Place page by looking into the HTML source of the Facebook Place page and 
+recognising some patterns. It was a slow business, so I wrote this instead.&lt;/p&gt;
+&lt;p&gt;Due to my not really knowing how to set things up properly, the installation says that:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;It can:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Read and change all your data on all facebook.com site&lt;/li&gt;
+&lt;li&gt;Read your browsing history
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;And I guess it &lt;em&gt;could&lt;/em&gt;, based on the permissions that I didn't properly set up, but version 1.0.4 doesn't. Except "Read 
+... data on ... facebook.com." of course. It does not need to read your browsing history, and it doesn't re-write nor 
+edit nor modify nor hide nor touch the Facebook HTML at all. And it most certainly does not in any way "change all your 
+data" on Facebook. I'll see about fixing these in a later version.&lt;/p&gt;
+&lt;p&gt;So: if ever getting the ID of a Facebook Place was something you wanted to do, then 
+&lt;a href="https://chrome.google.com/webstore/detail/get-facebook-id/fakbnhhfckloijmnbpdanjeniajgjgcn?hl=en" 
+   target="_blank" title="Get Facebook ID in the Chrome Store"&gt;Get Facebook ID&lt;/a&gt; might be useful..&lt;/p&gt;</content><category term='"Google Chrome extension"'></category><category term="javascript"></category><category term="HTML"></category><category term="Facebook"></category></entry><entry><title>Handy JSON-related links</title><link href="http://endafarrell.net/handy-json-related-links.html" rel="alternate"></link><published>2010-05-17T20:20:00+02:00</published><updated>2016-06-26T12:00:00+02:00</updated><author><name>Enda Farrell</name></author><id>tag:endafarrell.net,2010-05-17:/handy-json-related-links.html</id><summary type="html">&lt;p&gt;I keep loosing these links, so I thought I’d spend a minute and gather them here:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=""&gt;http://jsonformatter.curiousconcept.com/&lt;/a&gt; - really excellent&lt;/li&gt;
+&lt;li&gt;&lt;a href=""&gt;http://chris.photobooks.com/json/default.htm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=""&gt;http://www.thomasfrank.se/downloadableJS/JSONeditor_example.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These sites all do something a wee bit different from each other, and …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I keep loosing these links, so I thought I’d spend a minute and gather them here:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=""&gt;http://jsonformatter.curiousconcept.com/&lt;/a&gt; - really excellent&lt;/li&gt;
+&lt;li&gt;&lt;a href=""&gt;http://chris.photobooks.com/json/default.htm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=""&gt;http://www.thomasfrank.se/downloadableJS/JSONeditor_example.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These sites all do something a wee bit different from each other, and at different times I have used them all.&lt;/p&gt;
+&lt;p&gt;Update 2016-06-25 12:00: Over the last 6 years a different site has become my go-to for getting a better look at my
+content:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=""&gt;http://jsbeautifier.org&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I'd be surprised if this site is news to anyone, but just in case ;-)&lt;/p&gt;</content><category term="json"></category></entry></feed>

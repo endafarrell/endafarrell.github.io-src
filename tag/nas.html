@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>endafarrell.net - nas</title>
+        <link rel="stylesheet" href="../theme/css/main.css" />
+        <link href="http://endafarrell.net/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="endafarrell.net Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="../">endafarrell.net </a></h1>
+                <nav><ul>
+                    <li><a href="../category/geo.html">Geo</a></li>
+                    <li><a href="../category/javascript.html">Javascript</a></li>
+                    <li><a href="../category/other-code.html">Other code</a></li>
+                    <li><a href="../category/python.html">Python</a></li>
+                    <li><a href="../category/quantified-self.html">Quantified self</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="../note-to-self-sharing-the-best-photos.html">Note to self: sharing the best photos</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2013-02-03T00:00:00+01:00">
+                Published: Sun 03 February 2013
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/enda-farrell.html">Enda Farrell</a>
+        </address>
+<p>In <a href="../category/other-code.html">Other code</a>.</p>
+<p>tags: <a href="../tag/photos.html">photos</a> <a href="../tag/rsync.html">rsync</a> <a href="../tag/library.html">library</a> <a href="../tag/manage.html">manage</a> <a href="../tag/aperture.html">aperture</a> <a href="../tag/nas.html">nas</a> </p>
+</footer><!-- /.post-info --><p>We take quite a few photos and I'm forever reinventing how I look after them. Here's where I am at at the moment:</p>
+<ul>
+<li>Photos come from a few different cameras</li>
+<li>Aperture (now 3.2.4) is what we use to manage them</li>
+<li>All photos/videos are imported</li>
+<li>Good ones get a 3 start rating, very good a 4 and the best a 5.</li>
+<li>Rejected, one and two star photos are deleted - unrated get to live for another day</li>
+<li>I export full size JPGs to my ~/Pictures/ApertureExports into subdirectories for each year.</li>
+<li>After exporting I use (the very excellent) <a href="http://www.sno.phy.queensu.ca/~phil/exiftool/">exiftool</a>
+    to change the ctime of the file to be the photos's Original Datetime: (see the code block below)</li>
+<li>I have a <a href="http://www.readynas.com/?cat=3">ReadyNAS</a> server for backups.</li>
+<li>
+<p>I mount the NAS and rsync the exports: (see the code block below)</p>
+<p>exiftool "-filemodifydate&lt;datetimeoriginal" .</p>
+<p>rsync -rv --delete --progress --times \
+    /Users/Shared/ApertureExports/ \
+    /Volumes/nasmedia/Pictures/BestApertureExports/</p>
+</li>
+</ul>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://endafarrell.net/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
