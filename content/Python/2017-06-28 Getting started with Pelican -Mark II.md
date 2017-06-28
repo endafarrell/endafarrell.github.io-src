@@ -36,7 +36,7 @@ All thanks - and quick write-ups that are both useful and readable - for this go
 * <https://fedoramagazine.org/make-github-pages-blog-with-pelican/>
 
 
-Other sites with advise I'd like to take are:
+Other sites with advice I'd like to take are:
 
 * <http://cyrille.rossant.net/pelican-github/> 
 * <http://nafiulis.me/making-a-static-blog-with-pelican.html>
