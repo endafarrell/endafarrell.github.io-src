@@ -23,6 +23,8 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
+# MARKDOWN = ['fenced_code', 'codehilite(css_class=highlight, linenums=True)', 'extra']
+
 # Blogroll - Not used
 LINKS = (('Pelican', 'http://getpelican.com/'),
          ('Python.org', 'http://python.org/'),
