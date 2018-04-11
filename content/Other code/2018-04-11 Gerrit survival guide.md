@@ -11,10 +11,8 @@ Initial checkout
 
 Your initial checkout should look something like this:
 
-        git clone \
-            ssh://you@gerrit.hostname:29418/project/sub-project \
-        && scp -p -P 29418 \
-            you@gerrit.hostname:hooks/commit-msg sub-project/.git/hooks/
+``git clone ssh://you@gerrit.hostname:29418/project/sub-project
+&& scp -p -P 29418 you@gerrit.hostname:hooks/commit-msg sub-project/.git/hooks/``
             
 You should then find yourself on the ``master`` branch.
 
@@ -24,19 +22,21 @@ You want to do some work
 Create a local branch to do your work. Always. Do not create a remote branch - it's almost never worth it, and if you're
 reading this, you're doing the wrong thing ;-)
 
-    git checkout -b BUG-1234 origin/master
+``git checkout -b BUG-1234 origin/master``
     
 This creates, and checksout, a new branch called BUG-1234 based on the current master.
 
 Do some work. Add, edit, delete some code. Then do the **first** checkin:
 
-    git add <changes>
-    git commit
+``git add <changes>``
+
+``git commit``
     
 Give your description. Now you might do some more work.
 
-    git add <new-changes>
-    git commit --amend
+``git add <new-changes>``
+
+``git commit --amend``
     
 The *core concept* in gerrit *seems* to be that you only push a **single** commit. This means you need to modify/amend 
 any pre-existing commits. gerrit itself sorts out the patch-sets when you push them, but you need to ``--amend`` locally 
@@ -45,7 +45,7 @@ when making your changes.
 If it's been a while since you created the local branch, the origin/master may have changed. **REBASE** and **NEVER 
 MERGE**:
 
-    git pull --rebase
+``git pull --rebase``
     
 When you ``merge`` you'll have a merge commit, that then means you have multiple commits. There _are_ ways of dealing 
 with this, but if you're reading this survival guide, they're not for you ;-)
@@ -54,7 +54,7 @@ If you have conflicts, fix them.
 
 Finally, you've rebased, you're happy with both your changes and commit message: time to send your code to be reviewed:
 
-    git push origin HEAD:refs/for/master
+``git push origin HEAD:refs/for/master``
     
 Then, go fix up some reviewers, with at least one who has ``+2``, and await feedback.
 
@@ -63,16 +63,17 @@ You have feedback from your reviews
 -----------------------------------
 Checkout your under-review branch. If you used a name like ``BUG-1234`` this will be easy:
 
-    git checkout BUG-1234
+``git checkout BUG-1234``
     
 Then, edit based on the feedback and treat these edits as "more work" on this branch. That means:
 
-    git add <review-changes>
-    git commit --amend
+``git add <review-changes>``
+
+``git commit --amend``
     
 Update, if necessary, your commit message, but **leave the ChangeId alone**! Then, when ready:
 
-    git push origin HEAD:refs/for/master
+``git push origin HEAD:refs/for/master``
     
 Gerrit itself sorts out the patchsets - but you'll need to redo the reviewers sometimes.
 
