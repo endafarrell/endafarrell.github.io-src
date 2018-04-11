@@ -9,7 +9,7 @@ Sources for personal github pages
 4. Write something in one of the ``content`` folders.
 5. ``make html`` in this top-level dir
 6. In a new console/terminal, ``cd`` into the ``output`` dir, ``python -m SimpleHTTPServer`` and preview the edits at
-   [http://localhost:8000/] 
+   [http://localhost:8000/](http://localhost:8000/) 
 7. Rinse and repeat.
 8. ``git add <whatever>`` has changed while in this top-level dir.
 9. ``git commit`` and ``git push`` to capture the edits. 
