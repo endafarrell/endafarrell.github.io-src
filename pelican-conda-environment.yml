@@ -1,3 +1,5 @@
+# Made changes? Then: 
+# ``conda env update --file pelican-conda-environment.yml``
 name: pelican
 
 dependencies:
@@ -8,6 +10,7 @@ dependencies:
   - pelican=3.7.1
   - matplotlib
   - black
+  - beautifulsoup4
   - pip:
     - webassets
     - cssmin

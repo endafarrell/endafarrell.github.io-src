@@ -1,10 +1,24 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*- #
-from __future__ import unicode_literals
 
 AUTHOR = "Enda Farrell"
 SITENAME = "endafarrell.net"
 SITEURL = ""
+
+# Neeced for ``medio``
+BLOG_AUTHORS = {
+    AUTHOR: {
+        "description": """I am Enda. I engineer data and make things work.""",
+        "short_description": """Enda. Data. Do-er.""",
+        "image": "../theme/images/authors/johndoe.png",
+        "links": (
+            ("github", "https://github.com/endafarrell"),
+            ("twitter-square", "https://twitter.com/endafarrell"),
+        ),
+    }
+}
+
+# Needed for `smoothie``
+LANDING_PAGE_ABOUT = {'details': BLOG_AUTHORS[AUTHOR]["description"]}
 
 # These two need to go together and be consistent!
 ARTICLE_URL = "posts/{date:%Y}-{date:%m}-{date:%d}/{slug}/"
@@ -46,8 +60,27 @@ RELATIVE_URLS = True
 MARKUP = ("md", "ipynb")
 
 # Adds the pelican-ipynb plugin
-PLUGIN_PATHS = ["./plugins", "pelican-plugins"]
-PLUGINS = ["ipynb.markup", "assets"]
+PLUGIN_PATHS = ["./plugins", "./pelican-plugins"]
+PLUGINS = ["ipynb.markup", "assets", "materialbox"]
 IGNORE_FILES = [".ipynb_checkpoints"]
 
 GOOGLE_ANALYTICS = "UA-101964846-1"
+
+from functools import partial
+
+
+def sidebar(value):
+    if value.startswith("archives") or value.startswith("category"):
+        return "right-sidebar"
+    elif value == "index":
+        return "index"
+    else:
+        return "no-sidebar"
+
+
+JINJA_FILTERS = {
+    "sort_by_article_count": partial(
+        sorted, key=lambda tags: len(tags[1]), reverse=True
+    ),  # reversed for descending order
+    "sidebar": sidebar,
+}
