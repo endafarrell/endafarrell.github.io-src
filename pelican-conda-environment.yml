@@ -1,0 +1,15 @@
+name: pelican
+
+dependencies:
+  - python=3.6
+  - cython
+  - bpython
+  - jupyter
+  - pelican=3.7.1
+  - matplotlib
+  - black
+  - pip:
+    - webassets
+    - cssmin
+    - bpython
+
