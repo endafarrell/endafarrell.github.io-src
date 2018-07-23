@@ -1,6 +1,5 @@
 Title: Graphs and diagrams in documentation via Makefiles
 Date: 2018-07-09
-Category: Python
 Tags: Python, Sphinx, Makefile, Mermaid
 
 [Mermaid](https://mermaidjs.github.io/) is a very useful way of writing a form of Markdown that

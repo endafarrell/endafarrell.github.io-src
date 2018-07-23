@@ -1,6 +1,5 @@
 Title: A Simple Chrome extension
 Date: 2016-06-09 21:40
-Category: Javascript
 Tags: "Google Chrome extension", javascript, HTML, Facebook
 
 I had an itch to be able to easily find the Facebook ID for Place pages that I was visiting. You can - usually - find 

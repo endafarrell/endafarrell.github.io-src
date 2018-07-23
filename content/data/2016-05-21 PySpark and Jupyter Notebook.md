@@ -1,7 +1,6 @@
 Title: PySpark and Jupyter Notebook
 Date: 2016-05-21 11:11
 Modified: 2016-07-02 18:00
-Category: Python
 Tags: pyspark, jupyter, ipython, notebook, how-to, conda
 
 There's a _lot_ of crap advice about getting jupyter notebooks to play nicely with pyspark. I guess things have changed

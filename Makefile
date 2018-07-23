@@ -62,7 +62,7 @@ help:
 	@echo '                                                                          '
 
 html:
-	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) -t $(BASEDIR)/themes/pelican-clean-blog-enda $(PELICANOPTS)
+	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) -t $(BASEDIR)/themes/cashel $(PELICANOPTS)
 	@echo 'endafarrell.net' > $(OUTPUTDIR)/CNAME
 
 #clean:

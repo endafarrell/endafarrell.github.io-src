@@ -1,6 +1,5 @@
 Title: Getting started with Pelican - Mark II
 Date: 2017-06-28 20:20
-Category: Python
 Tags: pelican, publishing, blog, "github pages"
 
 It's been a year since my original [Getting started with Pelican](../../2016-05-08/getting-started-with-pelican/) post and 

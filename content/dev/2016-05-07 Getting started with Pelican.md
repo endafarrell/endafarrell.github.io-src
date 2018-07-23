@@ -1,6 +1,5 @@
 Title: Getting started with Pelican
 Date: 2016-05-08 20:20
-Category: Python
 Tags: pelican, publishing, blog, jekyll, "github pages"
 
 Getting started with Pelican since I'd quite like to have somewhere that I can refer to. Why not use the automatic pages
