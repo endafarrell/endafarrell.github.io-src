@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*- #
+from functools import partial
 
 AUTHOR = "Enda Farrell"
 SITENAME = "endafarrell.net"
@@ -66,7 +67,7 @@ IGNORE_FILES = [".ipynb_checkpoints"]
 
 GOOGLE_ANALYTICS = "UA-101964846-1"
 
-from functools import partial
+
 
 
 def sidebar(value):
