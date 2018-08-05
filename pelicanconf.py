@@ -28,8 +28,8 @@ ARTICLE_SAVE_AS = "posts/{date:%Y}-{date:%m}-{date:%d}/{slug}/index.html"
 PATH = "content"
 
 TIMEZONE = "Europe/Berlin"
-
 DEFAULT_LANG = "en"
+DEFAULT_DATE_FORMAT = ("%a %Y-%m-%d")
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -51,7 +51,7 @@ LINKS = (
 # Social widget - Not used
 SOCIAL = (("You can add links in your config file", "#"), ("Another social link", "#"))
 
-DEFAULT_PAGINATION = 100
+DEFAULT_PAGINATION = 25
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
@@ -65,9 +65,17 @@ PLUGIN_PATHS = ["./plugins", "./pelican-plugins"]
 PLUGINS = ["ipynb.markup", "assets", "materialbox"]
 IGNORE_FILES = [".ipynb_checkpoints"]
 
-GOOGLE_ANALYTICS = "UA-101964846-1"
+# DISABLE GOOGLE_ANALYTICS = "UA-101964846-1"
 
-
+STATIC_PATHS = [
+    'images',
+    'extra/CNAME',
+    'extra/favicon.ico'
+]
+EXTRA_PATH_METADATA = {
+    'extra/CNAME': {'path': 'CNAME'},
+    'extra/favicon.ico': {'path': 'favicon.ico'}
+}
 
 
 def sidebar(value):
