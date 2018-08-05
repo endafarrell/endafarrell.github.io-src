@@ -213,57 +213,69 @@
 
 </div>
 
-<!-- TODO: make footer sticky -->
+
 <footer class="container-fluid">
     <div class="container">
         <div class="row">
 
-            {% set SOCIAL_WIDGET_NAME = SOCIAL_WIDGET_NAME or 'Social' %}
-            {% set LINKS_WIDGET_NAME = LINKS_WIDGET_NAME or 'Links' %}
-            {% for group_title, group_links in ((SOCIAL_WIDGET_NAME, SOCIAL), (LINKS_WIDGET_NAME, LINKS)) %}
-                <div class="col-md-2">
-                    {% if group_links %}
-                        <h5>{{ group_title }}</h5>
-                        <ul class="list-unstyled">
-                            {% for title, link in group_links %}
-                                <li>{{ m.render_link_icon(link, title, FAVICON_LINKS) }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-            {% endfor %}
+{#            {% set SOCIAL_WIDGET_NAME = SOCIAL_WIDGET_NAME or 'Social' %}#}
+{#            {% set LINKS_WIDGET_NAME = LINKS_WIDGET_NAME or 'Links' %}#}
+{#            {% for group_title, group_links in ((SOCIAL_WIDGET_NAME, SOCIAL), (LINKS_WIDGET_NAME, LINKS)) %}#}
+{#                <div class="col-md-2">#}
+{#                    {% if group_links %}#}
+{#                        <h5>{{ group_title }}</h5>#}
+{#                        <ul class="list-unstyled">#}
+{#                            {% for title, link in group_links %}#}
+{#                                <li>{{ m.render_link_icon(link, title, FAVICON_LINKS) }}</li>#}
+{#                            {% endfor %}#}
+{#                        </ul>#}
+{#                    {% endif %}#}
+{#                </div>#}
+{#            {% endfor %}#}
 
-            <div class="col-md-2">
-                <h5>Browse content by</h5>
-                <ul class="list-unstyled">
-                    {% if CATEGORIES_SAVE_AS %}
-                        <li><a href="{{ SITEURL }}/{{ CATEGORIES_SAVE_AS }}"><i class="fa fa-tags"></i> Categories</a>
-                        </li>
-                    {% endif %}
-                    {% if ARCHIVES_SAVE_AS %}
-                        <li><a href="{{ SITEURL }}/{{ ARCHIVES_SAVE_AS }}"><i class="fa fa-calendar"></i> Dates</a></li>
-                    {% endif %}
-                    {% if TAGS_SAVE_AS %}
-                        <li><a href="{{ SITEURL }}/{{ TAGS_SAVE_AS }}"><i class="fa fa-tag"></i> Tags</a></li>
-                    {% endif %}
-                </ul>
+            <div class="col-md-9">
+                <h5><i class="fa fa-tag"></i>Tags</h5>
+                {% set all_tags = [] %}
+                {% for tag, articles in tags %}
+                    {% if all_tags.append({'name': tag.name, 'url': tag.url, 'articles': articles|length()}) %}{% endif %}
+                {% endfor %}
+
+                {% for tag in all_tags|sort(reverse = True, attribute = 'articles') %}
+                    <a href="{{ SITEURL }}/{{ tag.url }}" data-toggle="tooltip"
+                       title="{{ tag.articles }} article{{ 's' if tag.articles > 1 else '' }} with this tag">{{ tag.name }}</a>
+                {% endfor %}
+
             </div>
 
-            <div class="col-md-2 text-muted">
-                <h5>Copyright notice</h5>
+{#            <div class="col-md-2">#}
+{#                <h5>Browse content by</h5>#}
+{#                <ul class="list-unstyled">#}
+{#                    {% if CATEGORIES_SAVE_AS %}#}
+{#                        <li><a href="{{ SITEURL }}/{{ CATEGORIES_SAVE_AS }}"><i class="fa fa-tags"></i> Categories</a>#}
+{#                        </li>#}
+{#                    {% endif %}#}
+{#                    {% if ARCHIVES_SAVE_AS %}#}
+{#                        <li><a href="{{ SITEURL }}/{{ ARCHIVES_SAVE_AS }}"><i class="fa fa-calendar"></i> Dates</a></li>#}
+{#                    {% endif %}#}
+{#                    {% if TAGS_SAVE_AS %}#}
+{#                        <li><a href="{{ SITEURL }}/{{ TAGS_SAVE_AS }}"><i class="fa fa-tag"></i> Tags</a></li>#}
+{#                    {% endif %}#}
+{#                </ul>#}
+{#            </div>#}
+
+            <div class="col-md-3">
                 {% set date_start = dates[-1].date.year if dates else None %}
                 {% set date_end   = dates[0].date.year if dates else None %}
-                <p>© Copyright
-                    {{ date_start if date_start }}{{ '-%s' % date_end if date_end and date_end != date_start }} {{ AUTHOR }}.</p>
+                <h5><i class="fa fa-copyright" aria-hidden="true"></i>
+                    {{ date_start if date_start }}{{ '-%s' % date_end if date_end and date_end != date_start }} {{ AUTHOR }}.</h5>
                 {% if COPYRIGHT %}
                     <p>{{ COPYRIGHT }}</p>
                 {% endif %}
-            </div>
-
-            <div class="col-md-2 text-muted">
+                <p><i class="fa fa-shield" aria-hidden="true"></i>
+                    <a href="{{ SITEURL }}/images/2017/7BE41ED9.pub.asc">My PGP public key</a></p>
                 <h5>Disclaimer</h5>
                 {% if DISCLAIMER %}
-                    <p>{{ DISCLAIMER }}</p>
+                    <p class="text-muted"><i class="fa fa-volume-down" aria-hidden="true"></i>{{ DISCLAIMER }}</p>
                 {% else %}
                     <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do
                         they represent the opinions of my previous, current and future employers or any of its

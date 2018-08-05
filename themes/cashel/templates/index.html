@@ -3,21 +3,27 @@
 
 {% block content %}
 
-  {% block content_title %}
-    <h2>Articles</h2>
-  {% endblock %}
+    {% block content_title %}
+        <h2>Latest articles</h2>
+    {% endblock %}
 
-  {% for article in articles_page.object_list %}
-    <article>
-      <header>
-        <h2><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags|e }}">{{ article.title }}</a></h2>
-      </header>
-      <div>{{ article.summary }}</div>
-      <div><a class="btn btn-primary" href="{{ SITEURL }}/{{ article.url }}"><strong>➟ Read more</strong></a></div>
-    </article>
-    <hr/>
-  {% endfor %}
+    {% for article in articles_page.object_list %}
+        <article>
+            <header>
+                <h2><i class="fa fa-pencil" aria-hidden="true"></i>
+                    <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark"
+                       title="Permalink to {{ article.title|striptags|e }}">{{ article.title }}</a></h2>
+            </header>
+            <div>{{ article.summary }}</div>
+            {% set s = article.summary|striptags %}
+            {% if s[-1] == "…" %}
+                <div><a class="btn btn-primary" href="{{ SITEURL }}/{{ article.url }}"><strong>➟ Read more </strong></a>
+                </div>
+            {% endif %}
+        </article>
+        <hr/>
+    {% endfor %}
 
-  {% include 'pagination.html' %}
+    {% include 'pagination.html' %}
 
 {% endblock content %}

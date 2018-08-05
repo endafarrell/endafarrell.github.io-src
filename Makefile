@@ -63,7 +63,6 @@ help:
 
 html:
 	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) -t $(BASEDIR)/themes/cashel $(PELICANOPTS)
-	@echo 'endafarrell.net' > $(OUTPUTDIR)/CNAME
 
 #clean:
 #	[ ! -d $(OUTPUTDIR) ] || rm -rf $(OUTPUTDIR)

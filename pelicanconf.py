@@ -5,31 +5,30 @@ AUTHOR = "Enda Farrell"
 SITENAME = "endafarrell.net"
 SITEURL = ""
 
-# Neeced for ``medio``
-BLOG_AUTHORS = {
-    AUTHOR: {
-        "description": """I am Enda. I engineer data and make things work.""",
-        "short_description": """Enda. Data. Do-er.""",
-        "image": "../theme/images/authors/johndoe.png",
-        "links": (
-            ("github", "https://github.com/endafarrell"),
-            ("twitter-square", "https://twitter.com/endafarrell"),
-        ),
-    }
-}
+DISCLAIMER = "These are my own personal opinions and are not endorsed by, nor do " \
+     + "they represent the opinions of any previous, current nor future employers."
 
-# Needed for `smoothie``
-LANDING_PAGE_ABOUT = {'details': BLOG_AUTHORS[AUTHOR]["description"]}
+CATEGORY_DESC = {
+    "dia": "relating to diabetes",
+    "dev": "relating to code, development, technology",
+    "ops": "relating to tech-ops, security, hardware, installations",
+    "data": "relating to data, data science, visualisations"
+}
 
 # These two need to go together and be consistent!
 ARTICLE_URL = "posts/{date:%Y}-{date:%m}-{date:%d}/{slug}/"
 ARTICLE_SAVE_AS = "posts/{date:%Y}-{date:%m}-{date:%d}/{slug}/index.html"
+TAGS_SAVE_AS = 'tags.html'
+CATEGORIES_SAVE_AS = 'categories.html'
+ARCHIVES_SAVE_AS = 'archives.html'
+
+SUMMARY_MAX_LENGTH = 100  # words
 
 PATH = "content"
 
 TIMEZONE = "Europe/Berlin"
 DEFAULT_LANG = "en"
-DEFAULT_DATE_FORMAT = ("%a %Y-%m-%d")
+DEFAULT_DATE_FORMAT = "%a %Y-%m-%d"
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None

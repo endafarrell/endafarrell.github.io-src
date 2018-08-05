@@ -13,10 +13,11 @@ html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
-  background-color: var(--background-color);
+  background-color: var(--main-color);
 }
 body {
   margin: 0;
+  background-color: var(--background-color);
 }
 article,
 aside,
@@ -3138,9 +3139,9 @@ fieldset[disabled] .btn-default.focus {
 .btn-primary:active,
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
-  color: #fff;
-  background-color: #286090;
-  border-color: #204d74;
+  color: var(--background-color);
+  background-color: var(--main-color);
+  border-color: var(--main-color);
 }
 .btn-primary:active:hover,
 .btn-primary.active:hover,
@@ -3151,9 +3152,9 @@ fieldset[disabled] .btn-default.focus {
 .btn-primary:active.focus,
 .btn-primary.active.focus,
 .open > .dropdown-toggle.btn-primary.focus {
-  color: #fff;
-  background-color: #204d74;
-  border-color: #122b40;
+  color: var(--background-color);
+  background-color: var(--main-color);
+  border-color: var(--main-color);
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -6763,6 +6764,10 @@ button.close {
 
 
 /*! style.css originally */
+article {
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
 code, pre {
   font-family: "Droid Sans Mono", Monaco, Menlo, Consolas, "Courier New", monospace;
   font-size: 15px;
@@ -7042,6 +7047,10 @@ footer, footer li {
 footer .text-muted {
   font-size: 12px;
   line-height: 13px;
+}
+
+footer a, footer a:active, footer a:hover {
+  color: #333;
 }
 
 blockquote {
