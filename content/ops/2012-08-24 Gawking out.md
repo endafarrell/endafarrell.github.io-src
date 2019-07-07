@@ -3,7 +3,7 @@ Date: 2012-08-24
 Tags: work, awk, unix, ops, gawk
 
 
-![awk logo]({filename}/images/gawking-out.jpg){:style="float: left; margin-right: 7px;"} I've been 
+![awk logo]({static}/images/gawking-out.jpg){:style="float: left; margin-right: 7px;"} I've been 
 processing log files recently to see how a live system is 
 being used. When you have millions of hits daily, you need these processors to be fast.
 

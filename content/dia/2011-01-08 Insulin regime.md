@@ -18,7 +18,7 @@ but it isn’t too far off (I think). The four different lines are (from the bot
 * The red line is drawn with the scale on the right - my sensitivity in mmol/L for 1 U of insulin. These sensitivity 
   are very high - they are normally 2 to 3 - so the 3 to 4 as I have here are unusual.
  
-![insulin]({filename}/images/Insulin-regime.1.png)
+![insulin]({static}/images/Insulin-regime.1.png)
 
 
 My HbA1C as of 5 Jan 2011 is 7.3 which suggests that the overall insulin dose is quite close to being correct (as a 
@@ -31,7 +31,7 @@ pattern has I believe been going on for about 6 weeks. I have anecdotal evidence
 corrective doses first thing - but foolishly I hadn’t been taking more glucose readings at breakfast. I had been 
 assuming that the correction was still making its way through the system and so didn’t retest.
 
-![insulin]({filename}/images/Insulin-regime.2.png)
+![insulin]({static}/images/Insulin-regime.2.png)
 
 This chart says a few things to me:
 

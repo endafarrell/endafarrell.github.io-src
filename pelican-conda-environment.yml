@@ -1,18 +1,21 @@
 # Made changes? Then: 
 # ``conda env update --file pelican-conda-environment.yml``
 name: pelican
+channels:
+  - conda-forge
 
 dependencies:
-  - python=3.6
+  - python=3.7.3
+  - pelican=4.0.1
+  - markdown
   - cython
-  - bpython
   - jupyter
-  - pelican=3.7.1
   - matplotlib
   - black
   - beautifulsoup4
+  - pip
   - pip:
+    - ptpython
     - webassets
     - cssmin
-    - bpython
 

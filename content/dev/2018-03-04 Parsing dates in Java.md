@@ -2,7 +2,7 @@ Title: Parsing dates in Java
 Date: 2018-03-04
 Tags: java, how-to, code
 
-![calendar image]({filename}/images/2018/parsing-dates-in-java.jpg){:style="float: left; margin-right: 7px;"} Clearly, the ``correct`` way to deal with dates in Java is with Joda, but I've been looking at a project which
+![calendar image]({static}/images/2018/parsing-dates-in-java.jpg){:style="float: left; margin-right: 7px;"} Clearly, the ``correct`` way to deal with dates in Java is with Joda, but I've been looking at a project which
 doesn't have Joda installed already, and I haven't earned the right to rearrange that project's dependencies and
 build patterns. It's also a project that needs to run on lower-specced machines (I'm used to writing server code,
 but this is destined for things like watches), so there are likely to be reasons I don't understand why external

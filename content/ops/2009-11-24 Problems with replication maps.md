@@ -11,7 +11,7 @@ Anyway - having two or more replications is not a problem with CouchDB (if you�
 ## Lacking symmetry
 However - we may not have been as careful as we’d have wished: look at these numbers:
 
-![a well-balanced set of servers in different datacentres]({filename}/images/2009/Problems-with-replication-maps.1.png) 
+![a well-balanced set of servers in different datacentres]({static}/images/2009/Problems-with-replication-maps.1.png) 
  
 
 Here we see that the replication maps have datacentre symmetry - the data in each node in the two data centres are the 
@@ -25,13 +25,13 @@ The datacentres give us the capacity to handle requests in our platform, but we 
 datacentre for resilience. Each node should be either a primary or a fallback node, and we should have resilience 
 symmetry - but look at what we actually have when we align the primary and fallbacks:
 
-![servers without fallbacks across datacentres]({filename}/images/2009/Problems-with-replication-maps.2.png) 
+![servers without fallbacks across datacentres]({static}/images/2009/Problems-with-replication-maps.2.png) 
 
 Ouch - this does not look symmetrical at all!
 
 Here’s where the problem lies - a bug in the config:
 
-![misconfigured replication mappings]({filename}/images/2009/Problems-with-replication-maps.3.png) 
+![misconfigured replication mappings]({static}/images/2009/Problems-with-replication-maps.3.png) 
 
 Here we can see a few problems:
 
@@ -75,7 +75,7 @@ kv003:5986 and kv004:5987 (one quarter of the full set) and reshard those - and 
 order to balance the load across the nodes - kv002:5986 will be demoted to be a fallback and kv004:5986 will be 
 promoted to be a full primary node as shown here:
 
-![correctly-configured replication mappings]({filename}/images/2009/Problems-with-replication-maps.4.png) 
+![correctly-configured replication mappings]({static}/images/2009/Problems-with-replication-maps.4.png) 
 
 
 However - there’s more.
@@ -89,7 +89,7 @@ work. Of course, for that to be picked up by the Tomcat layer above, DNS CNAMES 
 This table is horrible - so sorry - but it shows what is there now and by assuming that we need to keep everything 
 symmetrical - an excellent assumption - we can spot what needs to change. It essentially shows how to fix the problem.
 
-![unreadably-small set of entries]({filename}/images/2009/Problems-with-replication-maps.5.png) 
+![unreadably-small set of entries]({static}/images/2009/Problems-with-replication-maps.5.png) 
 
 In the yellow box we see the nodes that are both primary and fallback and the nodes that are unused. The fix - in the 
 green - shows the newly bolded fallback changes that most simply fix the problem. It was important that we were able 

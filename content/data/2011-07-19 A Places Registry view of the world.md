@@ -9,9 +9,9 @@ Each pixel is the location of one or more points of interest that we have as of 
 there may only be one place or there may be thousands - as is the case in Beijing, Shanghai and São Paolo.
 
 [![A blue-background map of the world, with white dots showing where places are]
-({filename}/images/A-Places-Registry-view-of-the-world.png)]({filename}/images/A-Places-Registry-view-of-the-world.png)
+({static}/images/A-Places-Registry-view-of-the-world.png)]({static}/images/A-Places-Registry-view-of-the-world.png)
 
-There’s a [black & white version]({filename}/images/A-Places-Registry-view-of-the-world.bw.png)
+There’s a [black & white version]({static}/images/A-Places-Registry-view-of-the-world.bw.png)
 black & white version too.
 
 Please feel free to use this image - but it would be nice if you acknowledge the source :-) And speaking of 

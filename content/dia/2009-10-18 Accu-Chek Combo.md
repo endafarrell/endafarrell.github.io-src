@@ -29,9 +29,9 @@ Then there were a few details that happened on that first day:
 
 Then smoothened out a little, I got this:
 
-![initial setup]({filename}/images/Accu-Chek-Combo.1.png)
-![dawn phenomenon]({filename}/images/Accu-Chek-Combo.2.png)
-![another take on the dawn phenomenon]({filename}/images/Accu-Chek-Combo.3.png)
+![initial setup]({static}/images/Accu-Chek-Combo.1.png)
+![dawn phenomenon]({static}/images/Accu-Chek-Combo.2.png)
+![another take on the dawn phenomenon]({static}/images/Accu-Chek-Combo.3.png)
 
 This chart shows a marked reduction between midnight (on the left) and three am, and a major increase between 3 and 6 
 am - to start countering the dawn phenomenon.
