@@ -1,4 +1,5 @@
-# Made changes? Then: 
+# Made changes? Then:
+# ``conda update -n base -c defaults conda``
 # ``conda env update --file pelican-conda-environment.yml``
 name: pelican
 channels:
