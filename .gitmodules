@@ -2,9 +2,6 @@
 	path = output
 	url = git@github.com:endafarrell/endafarrell.github.io.git
 	ignore = all
-[submodule "pelican-plugins"]
-	path = pelican-plugins
-	url = https://github.com/getpelican/pelican-plugins
 [submodule "plugins/materialbox"]
 	path = plugins/materialbox
 	url = git@github.com:greizgh/pelican-materialbox.git
