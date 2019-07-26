@@ -60,8 +60,8 @@ RELATIVE_URLS = True
 MARKUP = ("md", "ipynb")
 
 # Adds the pelican-ipynb plugin
-PLUGIN_PATHS = ["./plugins", "./pelican-plugins"]
-PLUGINS = ["ipynb.markup", "assets", "materialbox"]
+PLUGIN_PATHS = ["./plugins"]  # , "./pelican-plugins"]
+PLUGINS = ["ipynb.markup"]   # , "assets", "materialbox"]
 IGNORE_FILES = [".ipynb_checkpoints"]
 
 # DISABLE GOOGLE_ANALYTICS = "UA-101964846-1"
