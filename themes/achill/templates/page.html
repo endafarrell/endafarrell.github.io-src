@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+  {{ page.title|striptags }}
+{% endblock %}
+
+
+{% block content %}
+  <div>
+  {% if page.content.startswith('<div class="section" ') %}
+    {% if page.toc and page.showtoc %}
+    {% if page.intro %}<div class="section"><p>{{page.intro}}</p></div>{%endif%}
+    {{ page.toc }}
+    {% endif %}
+    {{ page.content }}
+  {% else %}
+    {# .md-generated content, needs another div #}
+  <div class="section">
+    {{ page.content }}
+  </div>
+  {% endif %}
+  </div>
+{% endblock %}

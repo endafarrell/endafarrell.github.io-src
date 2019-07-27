@@ -20,3 +20,8 @@ Sources for personal github pages
 
 At this point, you're all good.
 
+# Darken and Compress Images
+https://pinetools.com/darken-image
+https://compressor.io/compress
+https://compress-or-die.com/webp-process?scale=100&trim=0&quality=75&alpha_quality=80&sharpness=0&extreme_compression=1
+

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    Archives
+{% endblock %}
+
+
+{% block top_center %}
+    <h1>
+        <a href="{{ SITEURL }}/{{ ARCHIVES_SAVE_AS }}" rel="bookmark" title="Permalink to archives">Archives</a>
+    </h1>
+{% endblock %}
+
+
+{% block content %}
+
+    {% set year_range = [] %}
+    {% if dates %}
+    {% for year in range(dates[-1].date.year, dates[0].date.year + 1) %}
+        {% if year_range.append(year) %}{% endif %}
+    {% endfor %}
+    {% set year_range = year_range[::-1] %}
+
+    <div>
+        {% for year in year_range %}
+            {% set year_articles = [] %}
+            {% for article in dates %}
+                {% if article.date.year == year %}
+                    {% if year_articles.append(article) %}{% endif %}
+                {% endif %}
+            {% endfor %}
+            {% if year_articles|length() %}
+                <div>
+                    <h3>{{ year }}</h3>
+                    <div>
+                        {% for article in year_articles %}
+                            <div>
+                                <dt style="width: 10em; float: left;"><abbr class="published"
+                                                                            title="{{ article.date.isoformat() }}"><i
+                                        class="fa fa-calendar"></i> {{ article.locale_date }}</abbr></dt>
+                                <dd><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></dd>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+{% endblock %}

@@ -1,26 +1,28 @@
 # -*- coding: utf-8 -*- #
 from functools import partial
+from datetime import date
 
 AUTHOR = "Enda Farrell"
 SITENAME = "endafarrell.net"
-SITEURL = ""
-
-DISCLAIMER = "These are my own personal opinions and are not endorsed by, nor do " \
-     + "they represent the opinions of any previous, current nor future employers."
+HOME_TOP_LEAD = "Engineering Lead."
+CURRENTYEAR = date.today().year
 
 CATEGORY_DESC = {
     "dia": "relating to diabetes",
     "dev": "relating to code, development, technology",
     "ops": "relating to tech-ops, security, hardware, installations",
-    "data": "relating to data, data science, visualisations"
+    "data": "relating to data, data science, visualisations",
 }
 
 # These two need to go together and be consistent!
 ARTICLE_URL = "posts/{date:%Y}-{date:%m}-{date:%d}/{slug}/"
 ARTICLE_SAVE_AS = "posts/{date:%Y}-{date:%m}-{date:%d}/{slug}/index.html"
-TAGS_SAVE_AS = 'tags.html'
-CATEGORIES_SAVE_AS = 'categories.html'
-ARCHIVES_SAVE_AS = 'archives.html'
+TAGS_SAVE_AS = "tags.html"
+CATEGORIES_SAVE_AS = "categories.html"
+ARCHIVES_SAVE_AS = "archives.html"
+PAGE_URL = "{slug}/"
+PAGE_SAVE_AS = "{slug}/index.html"
+SLUGIFY_SOURCE = "basename"
 
 SUMMARY_MAX_LENGTH = 100  # words
 
@@ -37,18 +39,6 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
-# MARKDOWN = ['fenced_code', 'codehilite(css_class=highlight, linenums=True)', 'extra']
-
-# Blogroll - Not used
-LINKS = (
-    ("Pelican", "http://getpelican.com/"),
-    ("Python.org", "http://python.org/"),
-    ("Jinja2", "http://jinja.pocoo.org/"),
-    ("You can modify those links in your config file", "#"),
-)
-
-# Social widget - Not used
-SOCIAL = (("You can add links in your config file", "#"), ("Another social link", "#"))
 
 DEFAULT_PAGINATION = 25
 
@@ -61,19 +51,15 @@ MARKUP = ("md", "ipynb")
 
 # Adds the pelican-ipynb plugin
 PLUGIN_PATHS = ["./plugins"]  # , "./pelican-plugins"]
-PLUGINS = ["ipynb.markup"]   # , "assets", "materialbox"]
+PLUGINS = ["ipynb.markup", "pelican-page-hierarchy", "pelican-toc"]
 IGNORE_FILES = [".ipynb_checkpoints"]
 
-# DISABLE GOOGLE_ANALYTICS = "UA-101964846-1"
+TOC = {"TOC_INCLUDE_TITLE": False}
 
-STATIC_PATHS = [
-    'images',
-    'extra/CNAME',
-    'extra/favicon.ico'
-]
+STATIC_PATHS = ["images", "extra/CNAME", "extra/favicon.ico"]
 EXTRA_PATH_METADATA = {
-    'extra/CNAME': {'path': 'CNAME'},
-    'extra/favicon.ico': {'path': 'favicon.ico'}
+    "extra/CNAME": {"path": "CNAME"},
+    "extra/favicon.ico": {"path": "favicon.ico"},
 }
 
 

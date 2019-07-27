@@ -1,0 +1,116 @@
+<!DOCTYPE html>{% import 'macros.html' as m %}
+<html lang="{{ DEFAULT_LANG }}">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ SITENAME }} | {% block title %}{% endblock %}</title>
+    <meta name="author" content="{{ AUTHOR|e }}"/>
+    {#
+    # I don't have much CSS - by design. So, just include it here.
+    #}
+    <style>
+        body, html {
+            height: 100%;top: 0;left: 0;margin: 0;font-family: Palatino, "Helvetica Neue", Helvetica, Arial, sans-serif;font-size: 16pt;line-height: 1.6;color: #333;}
+
+        .fixed {font-family: Consolas, monaco, monospace;}
+
+        .lake { /* https://unsplash.com/photos/T7K4aEPoGGk */background-image: url("/theme/images/lake.jpg");}
+        .office { /* https://unsplash.com/photos/dZxQn4VEv2M */background-image: url("/theme/images/office.jpg");}
+        .gist { /* https://unsplash.com/photos/ieic5Tq8YMk */background-image: url("/theme/images/gist.jpg");}
+
+        #top {height: 100%;background-position: center;background-repeat: no-repeat;background-size: cover;}
+
+        #top > nav {padding: 2em;color: white;font-size: x-large;}
+        #top > nav a, #top > nav a:link, #top > nav a:visited, #top > nav a:hover, #top > nav a:active {color: inherit;text-decoration: inherit;font-weight: inherit;}
+        #top > nav a:hover, #top > nav a:active {color: inherit;text-decoration: inherit;font-weight: inherit;border-bottom: hotpink solid;}
+        .lead {font-size: 32pt;color: white;text-align: center;}
+        .sublead {font-size: 22pt;color: white;text-align: center;}
+        .small {font-size: smaller; color: #ddd;}
+
+        #top .bottom {position: absolute;bottom: 0;left: 50%;text-align: center;font-size: 60pt;color: hotpink;margin-bottom: 0;-webkit-animation: color-change 5s infinite;-moz-animation: color-change 5s infinite;-o-animation: color-change 5s infinite;-ms-animation: color-change 5s infinite;animation: color-change 5s infinite;}
+        @-webkit-keyframes color-change { 20% {color: hotpink;} 50% {color: white;} 80% {color: hotpink;} }
+        @-moz-keyframes color-change { 20% {color: hotpink;} 50% {color: white;} 80% {color: hotpink;} }
+        @-ms-keyframes color-change { 20% {color: hotpink;} 50% {color: white;} 80% {color: hotpink;} }
+        @-o-keyframes color-change { 20% {color: hotpink;} 50% {color: white;} 80% {color: hotpink;} }
+        @keyframes color-change { 20% {color: hotpink;} 50% {color: white;} 80% {color: hotpink;} }
+
+        .flex-grid {width: available;display: flex;align-items: center;flex-wrap: wrap;justify-content: space-between;}
+        .col {flex: 1; list-style-type: none;}
+
+        section div.section {padding: 2em;}
+        pre.literal-block, div.highlight > pre {font-family: Consolas, monaco, monospace;font-size: smaller;line-height: 1.2;background-color: #dfdfdf;padding: 1em;}
+
+        footer {background-color: #333;color: white;bottom: 0;padding: 2em;}
+        footer > p {padding: 2em;margin-bottom: 0;text-align: center;}
+        footer a, footer a:link, footer a:visited, footer a:hover, footer a:active {color: inherit;text-decoration: inherit;font-weight: inherit;}
+        footer a:hover, footer a:active {border-bottom: hotpink solid;}
+        footer .flex-grid, div#toc > ul.flex-grid { display: flex; align-items: flex-start; flex-wrap: wrap;  justify-content: space-between; }
+    </style>
+    {% block head %}{% endblock %}
+</head>
+
+
+<body>
+<section id="top" class="{% if page and page.imageclass %}{{page.imageclass}}{%else%}lake{%endif%}">
+    <nav class="flex-grid fixed">
+        <div class="col"><a href="/">ENDA<br/>FARR<br/>ELL.</a></div>
+        {% for p in pages %}
+        {% if p.title | lower not in ("résumé", "about") %}
+        {# I want to handle these two at the end on their own. #}
+        {% if "in-depth" not in p.url and p.url != "index/" %}
+        <div class="col"><a href="{{SITEURL}}/{{p.url}}">{{p.title }}</a></div>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <div class="col"><a href="{{SITEURL}}/resume/index.html">résumé</a></div>
+        <div class="col"><a href="{{SITEURL}}/about/index.html">about</a></div>
+    </nav>
+    {% if page and page.summary %}
+    <p class="sublead fixed">{{page.summary|striptags}}{% else %}
+    <p class="lead fixed">{{ self.title() }}{% endif %}</p>
+    <p class="bottom" title="scroll down">&#x21AF;</p>
+
+</section>
+<section>
+    {% block content %}{% endblock %}
+</section>
+<footer>
+    <p class="sublead">Make it happen.</p>
+    <div class="flex-grid">
+        <div class="col">
+            <p><a href="mailto:enda.farrell@gmail.com">Enda Farrell</a><br/>
+                <a href="https://her.is/2K7ojJA">Schönhauser Allee 168<br/>
+                    Berlin 10435<br/>
+                    Germany</a>
+            </p></div>
+        {# Put other things here #}
+        <div class="col">
+            <p>Email: <a href="mailto:enda.farrell@gmail.com"><span class="fixed">enda.farrell@gmail.com</span></a><br/>
+            LinkedIn: <a href="https://www.linkedin.com/in/endafarrell/"><span class="fixed">/in/endafarrell/</span></a><br/>
+            My PGP key: <a href="{{SITEURL}}/images/2019/7BE41ED9.pub.asc"><span class="fixed">7BE41ED9.pub.asc</span></a></p>
+        </div>
+        <div class="col">
+            <p>
+            {% for p in pages %}
+            {% if "in-depth" not in p.url and p.url != "index/" %}
+            <a href="{{SITEURL}}/{{p.url}}">{{p.title}}</a><br/>
+            {% endif %}
+            {% endfor %}
+            </p>
+        </div>
+    </div>
+    <div class="flex-grid">
+        <p class="col small">Disclaimer: these are my own personal opinions and are not endorsed by, nor do they
+            represent the opinions of any previous, current nor future employers. Not that there's anything that they
+            could object to, but you know, sometimes you need to be careful.</p>
+        <p class="small">Privacy: You may have noticed that there were no requests to set cookies for this site. There's
+            no javascript either and the only images are ones being served up directly from this site. this is by design
+            - I have no desire to track you 'round the web, nor to inadvertently help others to do so. However, this
+            site is hosted on github.io and your requests for these pages will end up in their servers and therefore
+            their logs. </p>
+        <p class="small">&copy; 2009-{{CURRENTYEAR}} Enda Farrell.</p>
+
+    </div>
+</footer>
+</body>
+</html>

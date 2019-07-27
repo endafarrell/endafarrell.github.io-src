@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}{{ HOME_TOP_LEAD }}{% endblock %}
+
+{% block content %}{% for p in pages %}{% if p.title == "index" %}
+
+<div><div class="section">{{ p.content }}</div></div>
+{% endif %}{% endfor %}
+{% endblock content %}
