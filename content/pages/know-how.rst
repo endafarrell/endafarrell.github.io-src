@@ -125,4 +125,4 @@ nginx
 -----
 :when: 2019-07
 
-I'm impressed with the ease of getting an nginx service running with TLS to reverse proxy an app server. The last
+I'm impressed with the ease of getting an nginx service running with TLS to reverse proxy an app server. 
