@@ -57,7 +57,7 @@ MARKUP = ("md", "ipynb")
 
 # Adds the pelican-ipynb plugin - but as of 2019-07 it is not used
 PLUGIN_PATHS = ["./plugins"]
-PLUGINS = ["ipynb.markup", "pelican-page-hierarchy", "pelican-toc"]
+PLUGINS = ["ipynb.markup", "pelican-page-hierarchy", "pelican-toc", "better_figures_and_images"]
 IGNORE_FILES = [".ipynb_checkpoints"]
 
 TOC = {"TOC_INCLUDE_TITLE": False}

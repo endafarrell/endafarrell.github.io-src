@@ -8,15 +8,19 @@ channels:
 dependencies:
   - python>=3.7.3
   - pelican>=4.0.1
-  - markdown
+  - beautifulsoup4
+  - black
   - cython
   - jupyter
+  - nodejs
+  - markdown
   - matplotlib
-  - black
-  - beautifulsoup4
+  - pillow
   - pip
+  - pysvg-py3
   - pip:
     - ptpython
     - webassets
     - cssmin
+    - cssutils
 

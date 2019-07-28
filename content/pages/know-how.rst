@@ -9,15 +9,51 @@ know-how
 
 Bluetooth tethering an Edison
 -----------------------------
+.. figure:: {static}/images/2018/intel-edison.png
+   :align: left
+
 :when: 2018-
 
 I use an Intel Edison computer with a communications board that gives it both wifi and bluetooth - but I kept finding
 the instructions on how to tether to be kind of confusing. While the instructions are almost certainly better today,
 I `wrote up my own notes </in-depth/bluetooth-tether-edison/>`_ in early 2018.
 
+Chrome extn
+-----------
+.. figure:: {static}/images/2019/Chrome.png
+   :align: left
+
+:when: 2016-06
+
+I had an itch to be able to easily find the Facebook ID for Place pages that I was visiting. You can - usually - find
+the ID that the Facebook Graph API uses for a Place page by looking into the HTML source of the Facebook Place page and
+recognising some patterns. It was a slow business, so I wrote this instead.
+
+Due to my not really knowing how to set things up properly, the installation says that:
+
+::
+
+    It can:
+
+    * Read and change all your data on all facebook.com site
+    * Read your browsing history
+
+
+And I guess it _could_, based on the permissions that I didn't properly set up, but version 1.0.4 doesn't. Except "Read
+... data on ... facebook.com." of course. It does not need to read your browsing history, and it doesn't re-write nor
+edit nor modify nor hide nor touch the Facebook HTML at all. And it most certainly does not in any way "change all your
+data" on Facebook. I'll see about fixing these in a later version.
+
+So: if ever getting the ID of a Facebook Place was something you wanted to do, then
+`Get Facebook ID <https://chrome.google.com/webstore/detail/get-facebook-id/fakbnhhfckloijmnbpdanjeniajgjgcn?hl=en>`_
+might be useful..
+
 
 fish, git status
 ----------------
+.. figure:: {static}/images/2018/fish-shell.png
+   :align: left
+
 :when: 2018-
 
 I'd always been a user of the ``bash`` shell, mostly due to two of my early mentors at Sapient in Australia and the fact
@@ -41,10 +77,21 @@ never had to think about what branch you've checked out and whether it's clean -
 
 git
 ---
+.. figure:: {static}/images/2018/fish-shell.png
+   :align: left
+
 :when: 2017
 
-I wrote a `Gerrit survival guild </in-depth/gerrit-survival-guide/>`_ some time ago, and while I'm no longer on that
-gerrit-backed project, I did come away with a few ``git`` lessons:
+I've been using git on and off for farious project for many many years, but you really only end up using the source
+control systems that the project you're on is using. I was one part of a team looking at moving a large, decade-old
+project from ``svn`` to ``git`` - but it didn't happen as (a) the devops processes relied on svn's incrementing revision
+numbers (and the cost to rework those was very high), and (b) one (senior) member of the team claimed they needed the
+ability to do "software archeology" to see who changed what when ... I believe it was a diversionary tactic to avoid the
+learning curve of a new tool.
+
+In 2016 I switched teams, one that was using ``git/gerrit`` and after months of team team I wrote a
+`Gerrit survival guild </in-depth/gerrit-survival-guide/>`_ . While I'm no longer on that gerrit-backed project, I did
+come away with a few ``git`` lessons:
 
 * If you administer a git repo, ensure that only ``fast-forward`` commits are allowed to ``master``. Better that the
   conflicts are dealt-with by one dev as they incorporate changes that have already landed on master than every single
@@ -54,6 +101,22 @@ gerrit-backed project, I did come away with a few ``git`` lessons:
 * Regularly ``git checkout master; git pull --rebase -all`` to get recent changes from master and then
   ``git checkout {feature-branch}`` and ``git rebase master``. It's possible to rebase the remote (rather than local)
   master, but the commands become longer and more prone to not being done right every time by everyone.
+
+
+gulp
+----
+:when: 2019-07
+
+Frontend build tools and pipelines are unbelievably complex. I __totally__ resonate with the `Hackernoon **How it feels
+to learn JavaScript in 2016** <https://hackernoon.com/how-it-feels-to-learn-javascript-in-2016-d3a717dd577f>`_ article
+(which to be fair is the frontend port of something similar in the DevOps world `CircleCI's **It's The Future** article
+from 2015 <https://circleci.com/blog/its-the-future/>`_) and just today I've stumbled into the differences between
+``gulp 3`` and ``gulp 4`` and being stung by the pain caused when people, instructions, tutorials do not take the time
+to ensure that each project has its own environment.
+
+Watch out - and I mean go and check the syntax of calls and don't just assume - that you're not going to install
+something into your "global" state - ensure that everything's in your venv, your conda, your working dir, your project
+dirs and then go and fix-up the paths in whatever scripts are being run.
 
 
 Jupyter
@@ -125,4 +188,4 @@ nginx
 -----
 :when: 2019-07
 
-I'm impressed with the ease of getting an nginx service running with TLS to reverse proxy an app server. 
+I'm impressed with the ease of getting an nginx service running with TLS to reverse proxy an app server.

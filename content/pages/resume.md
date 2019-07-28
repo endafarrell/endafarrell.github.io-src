@@ -7,35 +7,43 @@ imageclass: office
 
 ### Location Graph 2018-
 
-Awesome project. On-going and still a little hush-hush. 
+Awesome project. On-going and still a little hush-hush. It involves graph databases (Neo4j), spatial databases and the
+coordinated coalescing of almost all of the important data HERE has a mapping company. 
+
+There are data pipelines, public demonstration websites, hugely efficient multiprocessing extractors, transformers and 
+loaders: yet it's not the technologies that are the exciting part - it's the chance to change how we all interact with 
+map data.
+
 
 ### Facebook Places 2016-2018 
 
-The Facebook Places project is a large, strategic to the company programme of work that builds on my
-earlier “External Content Ingestion” and “Online Place Engagement” endeavours. My role is data
-modelling lead, I combine being a subject matter expert, a Data Scientist and Data Science Engineer,
-Systems Architect and team lead given the complexities of the programme. The business objectives are
-clear: extract places from the Facebook feed which are missing from HERE’s PDS system, and, give
-supporting evidence for other places in our datasets. The Data Science continues to evolve. Many
-different models were tried: SVM (not a binary problem), logistic regression (problem isn’t really
-linear) & eventually decision trees. There continue to be problems with over-fitting due to
-inaccurate labels. These labels come from in-house experts (spreadsheet), Mechanical Turk and
-CrowdFlower jobs: but label veracity is still a concern. I am the owner of the (still) champion
-model which is a high-precision, rules-oriented, multi-class classifier - its success is largely
-down to deep domain knowledge and intuition. Data-science engineering has been made “production
-grade”: the Data Science team (based in Seattle) used email to share jupyter-based notebook models.
-We educated them in the use of git, issue tracking systems and codes reviews. Initially their models
-“worked on my machine” but not on the shared infrastructure that the ops team provided us: more
-tutoring on coercing code to work with existing tooling and convincing ops teams to deploy anaconda
+The Facebook Places project is a large, strategic to the company, programme of work that builds on my
+earlier “External Content Ingestion” and “Online Place Engagement” endeavours. My role was data
+modelling lead and combined being a subject matter expert, a Data Scientist and Data Science Engineer,
+Systems Architect and team lead given how complex everything was. The business objectives were
+clear: find good quality places from the Facebook feed which are missing from HERE’s places system, and, give
+supporting evidence for other places in our datasets. 
+
+The Data Science realating to this was in its infancy and continues to evolve. Many different models were tried: SVM
+(though tis is not a binary problem), logistic regression (though the challence isn’t really linear) and in 2017 we
+deicded to invest in random Forests. There continues, even today, to be problems with over-fitting due to inaccurate
+labels. These labels come from in-house experts (spreadsheets), Mechanical Turk and CrowdFlower jobs: but label veracity
+remains a concern. 
+
+Until mid 2018 I was  owner of the (still, 2019) champion model which is a high-precision, rules-oriented, multi-class
+classifier - its success is largely down to deep domain knowledge and intuition. Data-science engineering has been made
+“production grade”: the Data Science team (originally based in Seattle, since replaced with some from Chicago) used
+email to share jupyter-based notebook models. We educated them in the use of git, issue tracking systems and code
+reviews. Initially their models “worked on my machine” but not on the shared infrastructure that the ops team provided
+us: more tutoring on coercing code to work with existing tooling and convincing ops teams to deploy anaconda 
 distributions of python on the spark infrastructure.
 
-Engineering and operations aspects are still being addressed: 10TB of data, now growing at 36GB per
-day. 200M entities, with 170M updates daily: data retention policies and storage are operational
-issues.
+Engineering and operations aspects are still being addressed: 10+TB of data, now growing at 36GB per day. 420M entities,
+with 170M updates daily: data retention policies and storage are operational issues.
 
-The business value being brought is significant though. In 2014 we were at 77% coverage against
-Google’s 91% and as of Jan we’re both at 93% - a huge gain and a strategically important improvement
-as HERE’s competitive landscape continues to change.
+The business value being brought was and remains significant. In 2014 we were at 77% coverage against Google’s 91% and
+as of Jan we’re both at 93% - a huge gain and a strategically important improvement as HERE’s competitive landscape
+continues to change.
 
 
 ### Online Place Engagement 2015 
