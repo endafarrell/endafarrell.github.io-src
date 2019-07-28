@@ -27,12 +27,12 @@
         .sublead {font-size: 22pt;color: white;text-align: center;}
         .small {font-size: smaller; color: #ddd;}
 
-        #top .bottom {position: absolute;bottom: 0;left: 50%;text-align: center;font-size: 60pt;color: hotpink;margin-bottom: 0;-webkit-animation: color-change 5s infinite;-moz-animation: color-change 5s infinite;-o-animation: color-change 5s infinite;-ms-animation: color-change 5s infinite;animation: color-change 5s infinite;}
-        @-webkit-keyframes color-change { 20% {color: hotpink;} 50% {color: white;} 80% {color: hotpink;} }
-        @-moz-keyframes color-change { 20% {color: hotpink;} 50% {color: white;} 80% {color: hotpink;} }
-        @-ms-keyframes color-change { 20% {color: hotpink;} 50% {color: white;} 80% {color: hotpink;} }
-        @-o-keyframes color-change { 20% {color: hotpink;} 50% {color: white;} 80% {color: hotpink;} }
-        @keyframes color-change { 20% {color: hotpink;} 50% {color: white;} 80% {color: hotpink;} }
+        #top .bottom {position: absolute;bottom: 0;left: 50%;text-align: center;font-size: 60pt;color: hotpink;margin-bottom: 0;-webkit-animation: color-bounce 5s infinite;-moz-animation: color-bounce 5s infinite;-o-animation: color-bounce 5s infinite;-ms-animation: color-bounce 5s infinite;animation: color-bounce 5s infinite;}
+        @-webkit-keyframes color-bounce { 20% {color: hotpink;} 50% {color: white;} 80% {color: hotpink;} }
+        @-moz-keyframes color-bounce { 0%, 20% {color: hotpink; transform: translateY(0);} 50% {color: white;transform: translateY(30px);} 80%, 100% {color: hotpink;transform: translateY(0);} }
+        @-ms-keyframes color-bounce { 0%, 20% {color: hotpink; transform: translateY(0);} 50% {color: white;transform: translateY(30px);} 80%, 100% {color: hotpink;transform: translateY(0);} }
+        @-o-keyframes color-bounce { 0%, 20% {color: hotpink; transform: translateY(0);} 50% {color: white;transform: translateY(30px);} 80%, 100% {color: hotpink;transform: translateY(0);} }
+        @keyframes color-bounce { 0%, 20% {color: hotpink; transform: translateY(0);} 50% {color: white;transform: translateY(30px);} 80%, 100% {color: hotpink;transform: translateY(0);} }
 
         .flex-grid {width: available;display: flex;align-items: center;flex-wrap: wrap;justify-content: space-between;}
         .col {flex: 1; list-style-type: none;}
