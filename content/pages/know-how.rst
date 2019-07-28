@@ -77,7 +77,7 @@ never had to think about what branch you've checked out and whether it's clean -
 
 git
 ---
-.. figure:: {static}/images/2018/fish-shell.png
+.. figure:: {static}/images/2018/git.png
    :align: left
 
 :when: 2017
