@@ -68,7 +68,7 @@ far through a rebase you are is a real benefit:
 .. image:: /images/2018/git-prompt.png
    :alt: an informative prompt
 
-Previous incarnations of this was done with ``bsah`` and ``vcprompt`` but on big projects that was noticeably slow, and
+Previous incarnations of this was done with ``bash`` and ``vcprompt`` but on big projects that was noticeably slow, and
 there's a better way - the `fish shell <https://fishshell.com/>`_ with its ``Classic + Vcs`` prompt.
 
 Don't let their homepage put you off though - find a YouTube video or two to see how productive you could become if you
@@ -82,7 +82,7 @@ git
 
 :when: 2017
 
-I've been using git on and off for farious project for many many years, but you really only end up using the source
+I've been using git on and off for various project for many years, but you really only end up using the source
 control systems that the project you're on is using. I was one part of a team looking at moving a large, decade-old
 project from ``svn`` to ``git`` - but it didn't happen as (a) the devops processes relied on svn's incrementing revision
 numbers (and the cost to rework those was very high), and (b) one (senior) member of the team claimed they needed the
@@ -142,7 +142,7 @@ a lot of work - as to side-step robust (and ever-strengthening0 security process
 One part of this process involved gateway servers crossing AWS VPCs and I'd wanted to have TLS from our ``nginx``
 reverse proxy, and rather than using self-signed certs I chose Let's Encrypt.
 
-Using Let's Encrypt is suposed to be easy and straight-forward, but due to other corporate limitations, our EC2
+Using Let's Encrypt is supposed to be easy and straight-forward, but due to other corporate limitations, our EC2
 instances were not able to ``apt-get install certbot`` so I ended up checking out the certbot source code and, as it's
 python, using that to get the certificates. As I (a) really did not want to open this internal server to the public
 internet, and (b) have control of the Route53 for these internal servers (which I grant you is an unusual combination),

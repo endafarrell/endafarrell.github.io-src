@@ -6,7 +6,7 @@ index
 
 
 
-Engineeering lead; Business outcomesdriven software architect; and data-science engineer with a
+Engineering lead; business outcomes-driven software architect and data-science engineer with a
 repeatedly-proven ability to decompose large systems into manageable and discrete components, and to get teams to
 deliver.
 

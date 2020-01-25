@@ -74,7 +74,7 @@ in:
     [DEL] Device 98:0D:2E:D8:59:73 Noncompliant
     Device has been removed
     
-I then ``quit`` and restarted ``cluetoothctl``:
+I then ``quit`` and restarted ``bluetoothctl``:
 
     bluetoothctl
     [NEW] Controller 58:A8:39:01:D5:E0 erig0 [default]

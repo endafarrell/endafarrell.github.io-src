@@ -3,7 +3,7 @@ summary: where I've worked
 imageclass: office
 
  
-## Senior Software Architect, Principal Engineer. HERE Berlin. 2010-present 
+## Senior Principal Engineer. HERE Berlin. 2010-present 
 
 ### Location Graph 2018-
 
@@ -24,9 +24,9 @@ Systems Architect and team lead given how complex everything was. The business o
 clear: find good quality places from the Facebook feed which are missing from HERE’s places system, and, give
 supporting evidence for other places in our datasets. 
 
-The Data Science realating to this was in its infancy and continues to evolve. Many different models were tried: SVM
-(though tis is not a binary problem), logistic regression (though the challence isn’t really linear) and in 2017 we
-deicded to invest in random Forests. There continues, even today, to be problems with over-fitting due to inaccurate
+The Data Science relating to this was in its infancy and continues to evolve. Many different models were tried: SVM
+(though tis is not a binary problem), logistic regression (though the challenge isn’t really linear) and in 2017 we
+decided to invest in Random Forests. There continues, even today, to be problems with over-fitting due to inaccurate
 labels. These labels come from in-house experts (spreadsheets), Mechanical Turk and CrowdFlower jobs: but label veracity
 remains a concern. 
 
