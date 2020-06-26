@@ -45,9 +45,7 @@ class IPythonNB(BaseReader):
     file_extensions = ["ipynb"]
 
     def read(self, filepath):
-        metadata = {}
-        metadata["ipython"] = True
-
+        metadata = {"ipython": True}
         # Files
         filedir = os.path.dirname(filepath)
         filename = os.path.basename(filepath)
