@@ -31,10 +31,7 @@ def unique(id, ids):
     """ Ensure id is unique in set of ids. Append '_1', '_2'... if not """
     while id in ids or not id:
         m = IDCOUNT_RE.match(id)
-        if m:
-            id = "%s_%d" % (m.group(1), int(m.group(2)) + 1)
-        else:
-            id = "%s_%d" % (id, 1)
+        id = "%s_%d" % (m.group(1), int(m.group(2)) + 1) if m else "%s_%d" % (id, 1)
     ids.add(id)
     return id
 
@@ -131,7 +128,7 @@ def generate_toc(content):
         return
 
     _toc_run = content.metadata.get("toc_run", content.settings[TOC_KEY]["TOC_RUN"])
-    if not _toc_run == "true":
+    if _toc_run != "true":
         return
 
     _toc_include_title = (
