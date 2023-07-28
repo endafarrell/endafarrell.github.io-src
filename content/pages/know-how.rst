@@ -6,6 +6,19 @@ know-how
 :showtoc: true
 :intro: There are times I find it useful to write down short notes about things that have value beyond the here and now. So much of what I deal with is short-term that it's helpful to recap occasionally. That's what this page is, a recap of some details that may yet prove useful.
 
+PostGIS
+-------
+.. figure:: {static}/images/2020/postgis.jpg
+   :align: left
+
+:when: 2018-
+
+I have a PostGIS database with ~3 billion geometries - points, lines, polygons and multipolygons - that represent many
+objects you'd put on a map - addresses, places, buildings, parks, lakes, rivers, roads. Along the way I've found some
+complexitites.
+
+* `valid geometries via python </in-depth/valid-postgis-geometries-via-python/>`_
+
 
 Bluetooth tethering an Edison
 -----------------------------

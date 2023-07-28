@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/Users/endafarrell/anaconda3/envs/pelican/bin/python"
+    "python.pythonPath": "/Users/endafarrell/anaconda3/envs/pelican/bin/python",
+    "restructuredtext.confPath": ""
 }

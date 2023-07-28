@@ -20,7 +20,7 @@ trouble and will have to reflash the machine. Go and rebuild the rig.
 1: ``reboot``. Best start off fresh.
 
 2: ``service cron stop``. The OpenAPS crontab has lots, and it runs a lot every minute. You don't 
-want them interfeering.
+want them interfering.
 
 3: ``ifconfig wlan0 down``. To get the rig to connect over Bluetooth, it's best if you don't have a 
 WiFi connection there already. You can confirm that the WiFi is down with ``ifconfig``: 
